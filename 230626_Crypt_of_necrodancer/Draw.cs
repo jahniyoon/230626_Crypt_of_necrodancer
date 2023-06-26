@@ -19,6 +19,12 @@ namespace _230626_Crypt_of_necrodancer
             Console.Write("●");
             Console.ResetColor();
         }
+        public void PlayerDead()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("●");
+            Console.ResetColor();
+        }
         public void Enemy()
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -28,7 +34,7 @@ namespace _230626_Crypt_of_necrodancer
         }
         public void Wall()
         {
-            Console.BackgroundColor = ConsoleColor.Magenta;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Write("▦");
             Console.ResetColor();
@@ -49,11 +55,47 @@ namespace _230626_Crypt_of_necrodancer
 
         public void Stick()
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.Write("▥");
             Console.ResetColor();
         }
+        public void VoidHeart()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("♡");
+            Console.ResetColor();
+        }
+        public void Heart(int left, int top)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            MoveCursor(left+2, top);
+            Console.Write("  ");
+            MoveCursor(left + 6, top);
+            Console.Write("  ");
+            MoveCursor(left, top+1);
+            Console.Write("          ");
+            MoveCursor(left + 2, top + 2);
+            Console.Write("      ");
+            MoveCursor(left + 4, top + 3);
+            Console.Write("  ");
+            Console.ResetColor();
+        }
+        public void GrayHeart(int left, int top)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            MoveCursor(left+2, top + 1);
+            Console.Write("  ");
+            MoveCursor(left + 6, top + 1);
+            Console.Write("  ");
+            MoveCursor(left + 4, top + 2);
+            Console.Write("  ");
+            Console.ResetColor();
+            MoveCursor(left + 4, top + 3);
 
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("■");
+            Console.ResetColor();
+        }
         public void GAMEOVER()
         {
             Console.ForegroundColor = ConsoleColor.Magenta;

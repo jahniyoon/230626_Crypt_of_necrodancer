@@ -10,7 +10,7 @@ namespace _230626_Crypt_of_necrodancer
     internal class MainGame
     {
         public static bool controlTiming = false;
-        const int MAP_SIZE_X = 32;
+        const int MAP_SIZE_X = 35;
         const int MAP_SIZE_Y = 18;
 
         const int FLOOR = 0;
@@ -25,14 +25,16 @@ namespace _230626_Crypt_of_necrodancer
 
         Random random = new Random();
         Draw draw = new Draw();
-        Position playerPos = new Position(MAP_SIZE_X / 2, MAP_SIZE_Y / 2);
         List<Position> enemyPositions = new List<Position>();
         RhythmBar rhythmBar = new RhythmBar();
 
         public static System.Timers.Timer timer;
+        public bool isPlayerMoved = false;
+
 
         public async void Run()
         {
+            Position playerPos = new Position(MAP_SIZE_X / 2, MAP_SIZE_Y / 2);
 
             int gameoverCheck = default;
 
@@ -96,13 +98,16 @@ namespace _230626_Crypt_of_necrodancer
                 while (true)
                 {
 
+
+                    Console.Beep(300, 100);
                     rhythmBar.Bar(0, 19);
 
                     // 적 무브
                     MoveEnemy(ref map, playerPos, ref enemyPositions, ref enemyLevel);
+                    isPlayerMoved = false;
+
                     enemyMove++;
                     enemyLevel++;
-                    Console.Beep(300, 100);
 
                     //적 생성
                     if (enemyMove % 3 == 0) // 3턴마다 적 생성
@@ -121,27 +126,33 @@ namespace _230626_Crypt_of_necrodancer
                     {
                         draw.MoveCursor(enemy.x * 2, enemy.y);
                         draw.Enemy();
+
+                      
                         // 게임오버 조건
                         if (playerPos.x == enemy.x && playerPos.y == enemy.y)
                         {
-                            Thread.Sleep(500);
-                            Console.Clear();
-                            draw.GAMEOVER();
-                            Console.ReadKey();
-                            Console.Clear();
-                            enemyPositions = new List<Position>();
+                        
                             gameoverCheck = 1;
                             break;
                         }
                     }
-                    if (gameoverCheck == 1) { break; } // 게임오버시 while 탈출
+                    if (gameoverCheck == 1)
+                    {
+                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                        draw.PlayerDead();
+                        Thread.Sleep(1000);
+                        Console.Clear();
+                        draw.GAMEOVER();
+                        Console.ReadKey();
+                        Console.Clear();
+                        enemyPositions = new List<Position>();
+                        break;
+                    } // 게임오버시 while 탈출
 
 
 
 
-
-
-                    if (Console.KeyAvailable)
+                    if (Console.KeyAvailable && !isPlayerMoved)
                     {
                         var key = await WaitForSingleKey();
 
@@ -196,6 +207,7 @@ namespace _230626_Crypt_of_necrodancer
                                 draw.Player();
                             }
                         }
+                        isPlayerMoved = true; // 첫 번째 키 입력 완료
                     }
 
                 }//플레이어 컨트롤
@@ -204,6 +216,7 @@ namespace _230626_Crypt_of_necrodancer
 
             }
             // } while 종료 게임오버시 탈출
+            gameoverCheck = default;
         }
         // } Run 종료
 
@@ -254,12 +267,10 @@ namespace _230626_Crypt_of_necrodancer
         }
         //  MoveEnemy 종료
 
-     
+
 
         static async Task<ConsoleKey?> WaitForSingleKey()
         {
-            var startTime = DateTime.Now;
-
             while (true)
             {
                 if (Console.KeyAvailable)
@@ -268,18 +279,8 @@ namespace _230626_Crypt_of_necrodancer
                     return keyInfo.Key;
                 }
 
-                var currentTime = DateTime.Now;
-                var elapsedTime = currentTime - startTime;
-
-                if (elapsedTime.TotalMilliseconds >= 900 && elapsedTime.TotalMilliseconds <= 1000)
-                {
-                    // 대기 시간 범위 내에 키 입력이 없으면 null을 반환하도록 처리
-                    return null;
-                }
-
-                await Task.Delay(100); // 100ms 대기
+                await Task.Delay(10); // 10ms 대기
             }
-
         }
 
     }

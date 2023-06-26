@@ -13,9 +13,10 @@ namespace _230626_Crypt_of_necrodancer
         const int EMPTY = 0;
         const int LEFT_STICK = 1;
         const int RIGHT_STICK = 2;
+        const int VOID_HEART = 3;
         const int MAX_HEIGHT = 3;
-        const int MAX_WIDTH = 32;
-        const int TEMPO = 28;
+        const int MAX_WIDTH = 35;
+        const int TEMPO = 26;
         int barCount = default;
         Draw draw = new Draw();
 
@@ -28,9 +29,10 @@ namespace _230626_Crypt_of_necrodancer
 
             List<Position> leftPositions = new List<Position>();
             List<Position> rightPositions = new List<Position>();
+            List<Position> voidHeartPositions = new List<Position>();
 
 
-            Init(ref leftPositions, ref rightPositions);
+            Init(ref leftPositions, ref rightPositions, ref voidHeartPositions);
 
             draw.MoveCursor(left, top);
 
@@ -47,11 +49,12 @@ namespace _230626_Crypt_of_necrodancer
                     {
                         draw.Stick();
                     }
+                    
                 }
                 Console.WriteLine();
             }
            
-                while (barCount <= 13)
+                while (barCount <= 15)
                 {
                     
 
@@ -76,29 +79,34 @@ namespace _230626_Crypt_of_necrodancer
                         draw.MoveCursor(rightPos.x * 2, top + i);
                         draw.Stick();
 
-                        // 마지막 잔여 스틱 제거
-                        draw.MoveCursor(28, top + i);
-                        draw.Empty();
-                        draw.MoveCursor(34, top + i);
-                        draw.Empty();
+                        
+                    
+                    draw.GrayHeart(left + 30, top);
+                    if (barCount >= 12)
+                    {
+                        draw.Heart(left + 30, top);
+
+                    }
+
                 }
-                    Thread.Sleep(TEMPO);
+                Thread.Sleep(TEMPO);
                     barCount++;
 
                 }
                 barCount = default;
-                Init(ref leftPositions, ref rightPositions);
+                Init(ref leftPositions, ref rightPositions, ref voidHeartPositions);
             
 
 
         }
         // public bar 종료
 
-        public void Init(ref List<Position> leftPositions, ref List<Position> rightPositions)
+        public void Init(ref List<Position> leftPositions, ref List<Position> rightPositions, ref List<Position> voidHeartPositions)
         {
 
             leftPositions = new List<Position>();
             rightPositions = new List<Position>();
+            voidHeartPositions = new List<Position>();
             // 타이밍 표 생성
             for (int height = 0; height < MAX_HEIGHT; height++)
             {
