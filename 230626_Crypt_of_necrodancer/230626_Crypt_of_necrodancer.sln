@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "230626_Crypt_of_necrodancer", "230626_Crypt_of_necrodancer.csproj", "{4EAA9A47-99D5-4128-A505-EC7E933F862E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EAA9A47-99D5-4128-A505-EC7E933F862E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EAA9A47-99D5-4128-A505-EC7E933F862E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EAA9A47-99D5-4128-A505-EC7E933F862E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EAA9A47-99D5-4128-A505-EC7E933F862E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D8CE814-B78E-426E-8BF8-71D61FA500CE}
+	EndGlobalSection
+EndGlobal
