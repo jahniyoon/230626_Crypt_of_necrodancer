@@ -10,6 +10,15 @@ namespace _230626_Crypt_of_necrodancer
     {
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
+
+            MainGame maingame = new MainGame();
+
+            while (true)
+            {
+                maingame.Run();
+            }
+
         }
     }
 }
