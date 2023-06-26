@@ -46,6 +46,14 @@ namespace _230626_Crypt_of_necrodancer
             Console.ResetColor();
 
         }
+
+        public void Stick()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("▥");
+            Console.ResetColor();
+        }
+
         public void GAMEOVER()
         {
             Console.ForegroundColor = ConsoleColor.Magenta;

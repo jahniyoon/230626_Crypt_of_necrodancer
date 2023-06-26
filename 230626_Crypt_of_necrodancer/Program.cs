@@ -13,10 +13,13 @@ namespace _230626_Crypt_of_necrodancer
             Console.CursorVisible = false;
 
             MainGame maingame = new MainGame();
+            RhythmBar bar = new RhythmBar();
+
 
             while (true)
             {
                 maingame.Run();
+                //bar.Bar();
             }
 
         }

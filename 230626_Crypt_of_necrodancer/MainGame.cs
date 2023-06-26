@@ -27,6 +27,7 @@ namespace _230626_Crypt_of_necrodancer
         Draw draw = new Draw();
         Position playerPos = new Position(MAP_SIZE_X / 2, MAP_SIZE_Y / 2);
         List<Position> enemyPositions = new List<Position>();
+        RhythmBar rhythmBar = new RhythmBar();
 
         public static System.Timers.Timer timer;
 
@@ -95,11 +96,12 @@ namespace _230626_Crypt_of_necrodancer
                 while (true)
                 {
 
+                    rhythmBar.Bar(0, 19);
+
                     // 적 무브
                     MoveEnemy(ref map, playerPos, ref enemyPositions, ref enemyLevel);
                     enemyMove++;
                     enemyLevel++;
-                    Thread.Sleep(900);
                     Console.Beep(300, 100);
 
                     //적 생성
@@ -133,6 +135,11 @@ namespace _230626_Crypt_of_necrodancer
                         }
                     }
                     if (gameoverCheck == 1) { break; } // 게임오버시 while 탈출
+
+
+
+
+
 
                     if (Console.KeyAvailable)
                     {
@@ -246,6 +253,9 @@ namespace _230626_Crypt_of_necrodancer
 
         }
         //  MoveEnemy 종료
+
+     
+
         static async Task<ConsoleKey?> WaitForSingleKey()
         {
             var startTime = DateTime.Now;
