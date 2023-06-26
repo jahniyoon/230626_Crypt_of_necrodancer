@@ -19,10 +19,16 @@ namespace _230626_Crypt_of_necrodancer
             Console.Write("●");
             Console.ResetColor();
         }
+        public void RedPlayer()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("●");
+            Console.ResetColor();
+        }
         public void PlayerDead()
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write("●");
+            Console.Write("◎");
             Console.ResetColor();
         }
         public void Enemy()

@@ -16,7 +16,7 @@ namespace _230626_Crypt_of_necrodancer
         const int VOID_HEART = 3;
         const int MAX_HEIGHT = 3;
         const int MAX_WIDTH = 35;
-        const int TEMPO = 26;
+        const int TEMPO = 23;
         int barCount = default;
         Draw draw = new Draw();
 
@@ -56,9 +56,7 @@ namespace _230626_Crypt_of_necrodancer
            
                 while (barCount <= 15)
                 {
-                    
-
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < MAX_HEIGHT; i++)
                     {
 
                         Position leftPos = leftPositions[i];    // 왼쪽 스틱

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
+
 
 namespace _230626_Crypt_of_necrodancer
 {
@@ -16,7 +18,8 @@ namespace _230626_Crypt_of_necrodancer
         const int FLOOR = 0;
         const int ENEMY = 2;
         const int WALL = 999;
-        const int WALL_VALUE = 30;
+        const int WALL_VALUE = 35;
+        const int HEART_TIMING = 625;
 
         int wallCount = default;
         int[][] map = new int[MAP_SIZE_X][];
@@ -24,12 +27,11 @@ namespace _230626_Crypt_of_necrodancer
         int enemyLevel = 2;
 
         Random random = new Random();
-        Draw draw = new Draw();
         List<Position> enemyPositions = new List<Position>();
+        Draw draw = new Draw();
         RhythmBar rhythmBar = new RhythmBar();
 
-        public static System.Timers.Timer timer;
-        public bool isPlayerMoved = false;
+
 
 
         public async void Run()
@@ -58,7 +60,52 @@ namespace _230626_Crypt_of_necrodancer
                         map[height][width] = FLOOR;
                     }
                 }
-                // 장애물 생성
+                int roomSize = random.Next(5, 10); // 랜덤한 방 크기 (3부터 14까지)
+                int startX = random.Next(1, MAP_SIZE_X - roomSize - 1); // 시작 X 좌표 (벽과 겹치지 않도록 범위 조절)
+                int startY = random.Next(1, MAP_SIZE_Y - roomSize - 1); // 시작 Y 좌표 (벽과 겹치지 않도록 범위 조절)
+
+                int doorSide = random.Next(4); // 문이 위치할 방의 한 변 (0: 위쪽, 1: 오른쪽, 2: 아래쪽, 3: 왼쪽)
+
+                // 네모난 방 생성
+                for (int height = startY; height < startY + roomSize; height++)
+                {
+                    for (int width = startX; width < startX + roomSize; width++)
+                    {
+                        // 방 내부
+                        if (height > startY && height < startY + roomSize - 1 && width > startX && width < startX + roomSize - 1)
+                        {
+                            map[height][width] = FLOOR;
+                        }
+                        // 방과 겹치는 외곽 벽
+                        else
+                        {
+                            map[height][width] = WALL;
+                        }
+
+                        // 문 생성
+                        if (doorSide == 0 && height == startY && width >= startX && width <= startX + roomSize - 1)
+                        {
+                            map[height][width] = FLOOR; 
+                            break; // 한 칸만 문이 위치하도록 하기 위해 반복문 종료
+                        }
+                        else if (doorSide == 1 && width == startX + roomSize - 1 && height >= startY && height <= startY + roomSize - 1)
+                        {
+                            map[height][width] = FLOOR;
+                            break;
+                        }
+                        else if (doorSide == 2 && height == startY + roomSize - 1 && width >= startX && width <= startX + roomSize - 1)
+                        {
+                            map[height][width] = FLOOR;
+                            break;
+                        }
+                        else if (doorSide == 3 && width == startX && height >= startY && height <= startY + roomSize - 1)
+                        {
+                            map[height][width] = FLOOR;
+                            break;
+                        }
+                    }
+                }
+                //// 장애물 생성
                 while (wallCount < WALL_VALUE)
                 {
                     int randomHeight = random.Next(2, MAP_SIZE_Y - 2);
@@ -91,25 +138,125 @@ namespace _230626_Crypt_of_necrodancer
                 draw.MoveCursor(playerPos.x * 2, playerPos.y);
                 draw.Player();
 
-
-
-
-
                 while (true)
                 {
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                    bool inputSuccess = false;
 
-
+                    rhythmBar.Bar(0, 20);
                     Console.Beep(300, 100);
-                    rhythmBar.Bar(0, 19);
+
+                    //입력대기
+                    while (true)
+                    {
+                       
+                        if (stopwatch.ElapsedMilliseconds >= HEART_TIMING+25)
+                        {
+                            break;
+                        }
+
+                        if (stopwatch.ElapsedMilliseconds >= HEART_TIMING-25 && stopwatch.ElapsedMilliseconds < HEART_TIMING+25)
+                        {
+                            if (Console.KeyAvailable)
+                            {
+
+                                ConsoleKeyInfo key = Console.ReadKey(true);
+
+                                // 플레이어 ▲
+                                if (key.Key == ConsoleKey.W || key.Key == ConsoleKey.UpArrow)
+                                {
+                                    if (map[playerPos.y - 1][playerPos.x] == FLOOR)
+                                    {
+                                        playerPos.y--;
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Player();
+                                        draw.MoveCursor(playerPos.x * 2, (playerPos.y + 1));
+                                        draw.Empty();
+                                       
+                                    }
+                                }
+
+                                // 플레이어 ▼
+                                if (key.Key == ConsoleKey.S || key.Key == ConsoleKey.DownArrow)
+                                {
+                                    if (map[playerPos.y + 1][playerPos.x] == FLOOR)
+                                    {
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Empty();
+                                        playerPos.y++;
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Player();
+                                       
+                                    }
+                                }
+
+                                // 플레이어 ◀
+                                if (key.Key == ConsoleKey.A || key.Key == ConsoleKey.LeftArrow)
+                                {
+                                    if (map[playerPos.y][playerPos.x - 1] == FLOOR)
+                                    {
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Empty();
+                                        playerPos.x--;
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Player();
+                                        
+                                    }
+                                }
+
+                                // 플레이어 ▶
+                                if (key.Key == ConsoleKey.D || key.Key == ConsoleKey.RightArrow)
+                                {
+                                    if (map[playerPos.y][playerPos.x + 1] == FLOOR)
+                                    {
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Empty();
+                                        playerPos.x++;
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Player();
+                                       
+                                    }
+                                }
+
+                                //debug
+                                draw.MoveCursor(72, 0);
+                                Console.WriteLine("[DEBUG]");
+                                draw.MoveCursor(72, 1);
+                                Console.WriteLine("Timing : {0}ms", stopwatch.ElapsedMilliseconds- HEART_TIMING);
+                                //debug
+
+                                inputSuccess = true;
+                                break;
+                            }
+                        }
+                        // 입력 if 종료
+                    }
+                    // 입력대기 while 종료
+                    if (!inputSuccess)
+                    {
+                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                        draw.RedPlayer();
+                        draw.MoveCursor(72, 2);
+                        Console.WriteLine("Last Timing : {0}", stopwatch.ElapsedMilliseconds);
+                        draw.MoveCursor(72, 2);
+                        Console.Beep(150, 100);
+                    }
+
+
+                    // 입력 성공 후 입력 버퍼 비우기
+                    while (Console.KeyAvailable)
+                    {
+                        Console.ReadKey(true);
+                    }
 
                     // 적 무브
                     MoveEnemy(ref map, playerPos, ref enemyPositions, ref enemyLevel);
-                    isPlayerMoved = false;
 
                     enemyMove++;
                     enemyLevel++;
 
-                    //적 생성
+                    ////적 생성
                     if (enemyMove % 3 == 0) // 3턴마다 적 생성
                     {
                         int enemyY = random.Next(2, MAP_SIZE_Y - 2);
@@ -127,15 +274,15 @@ namespace _230626_Crypt_of_necrodancer
                         draw.MoveCursor(enemy.x * 2, enemy.y);
                         draw.Enemy();
 
-                      
                         // 게임오버 조건
                         if (playerPos.x == enemy.x && playerPos.y == enemy.y)
                         {
-                        
                             gameoverCheck = 1;
                             break;
                         }
                     }
+
+                    //게임 오버 판정
                     if (gameoverCheck == 1)
                     {
                         draw.MoveCursor(playerPos.x * 2, playerPos.y);
@@ -143,76 +290,14 @@ namespace _230626_Crypt_of_necrodancer
                         Thread.Sleep(1000);
                         Console.Clear();
                         draw.GAMEOVER();
-                        Console.ReadKey();
+                        Thread.Sleep(1000);
                         Console.Clear();
                         enemyPositions = new List<Position>();
                         break;
                     } // 게임오버시 while 탈출
 
 
-
-
-                    if (Console.KeyAvailable && !isPlayerMoved)
-                    {
-                        var key = await WaitForSingleKey();
-
-                        // 플레이어 ▲
-                        if (key == ConsoleKey.W || key == ConsoleKey.UpArrow)
-                        {
-                            if (map[playerPos.y - 1][playerPos.x] == FLOOR)
-                            {
-                                playerPos.y--;
-                                draw.MoveCursor(playerPos.x * 2, playerPos.y);
-                                draw.Player();
-                                draw.MoveCursor(playerPos.x * 2, (playerPos.y + 1));
-                                draw.Empty();
-                            }
-                        }
-
-                        // 플레이어 ▼
-                        if (key == ConsoleKey.S || key == ConsoleKey.DownArrow)
-                        {
-                            if (map[playerPos.y + 1][playerPos.x] == FLOOR)
-                            {
-                                draw.MoveCursor(playerPos.x * 2, playerPos.y);
-                                draw.Empty();
-                                playerPos.y++;
-                                draw.MoveCursor(playerPos.x * 2, playerPos.y);
-                                draw.Player();
-                            }
-                        }
-
-                        // 플레이어 ◀
-                        if (key == ConsoleKey.A || key == ConsoleKey.LeftArrow)
-                        {
-                            if (map[playerPos.y][playerPos.x - 1] == FLOOR)
-                            {
-                                draw.MoveCursor(playerPos.x * 2, playerPos.y);
-                                draw.Empty();
-                                playerPos.x--;
-                                draw.MoveCursor(playerPos.x * 2, playerPos.y);
-                                draw.Player();
-                            }
-                        }
-
-                        // 플레이어 ▶
-                        if (key == ConsoleKey.D || key == ConsoleKey.RightArrow)
-                        {
-                            if (map[playerPos.y][playerPos.x + 1] == FLOOR)
-                            {
-                                draw.MoveCursor(playerPos.x * 2, playerPos.y);
-                                draw.Empty();
-                                playerPos.x++;
-                                draw.MoveCursor(playerPos.x * 2, playerPos.y);
-                                draw.Player();
-                            }
-                        }
-                        isPlayerMoved = true; // 첫 번째 키 입력 완료
-                    }
-
-                }//플레이어 컨트롤
-
-
+                }//적 플레이어 이동 while
 
             }
             // } while 종료 게임오버시 탈출
@@ -265,23 +350,7 @@ namespace _230626_Crypt_of_necrodancer
             }
 
         }
-        //  MoveEnemy 종료
-
-
-
-        static async Task<ConsoleKey?> WaitForSingleKey()
-        {
-            while (true)
-            {
-                if (Console.KeyAvailable)
-                {
-                    var keyInfo = Console.ReadKey(intercept: true);
-                    return keyInfo.Key;
-                }
-
-                await Task.Delay(10); // 10ms 대기
-            }
-        }
+       
 
     }
 }
