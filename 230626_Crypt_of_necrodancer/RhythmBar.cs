@@ -24,9 +24,6 @@ namespace _230626_Crypt_of_necrodancer
         public void Bar(int left, int top)
         {
             draw.MoveCursor(left, top);
-
-            Console.WriteLine("이곳에 출력");
-
             List<Position> leftPositions = new List<Position>();
             List<Position> rightPositions = new List<Position>();
             List<Position> voidHeartPositions = new List<Position>();
