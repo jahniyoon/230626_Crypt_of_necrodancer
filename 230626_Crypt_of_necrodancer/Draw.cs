@@ -62,16 +62,23 @@ namespace _230626_Crypt_of_necrodancer
 
 
 
-        public void Enemy()
+        public void Hunter()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("◈");
             Console.ResetColor();
 
         }
-        public void Slime()
+        public void GreenSlime()
         {
             Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("●");
+            Console.ResetColor();
+
+        }
+        public void BlueSlime()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("●");
             Console.ResetColor();
 
@@ -104,7 +111,12 @@ namespace _230626_Crypt_of_necrodancer
             Console.ResetColor();
 
         }
-
+        public void Gold()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("◐");
+            Console.ResetColor();
+        }
         public void Stick()
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -167,22 +179,33 @@ namespace _230626_Crypt_of_necrodancer
         {
             if (playerHP >= 0)
             {
-                HP_OFF(64, 0);
-                HP_OFF(66, 0);
-                HP_OFF(68, 0);
+                HP_OFF(0, 0);
+                HP_OFF(2, 0);
+                HP_OFF(4, 0);
                 if (playerHP >= 1)
                 {
-                    HP_ON(64, 0);
+                    HP_ON(0, 0);
                 }
                 if (playerHP >= 2)
                 {
-                    HP_ON(66, 0);
+                    HP_ON(2, 0);
                 }
                 if (playerHP >= 3)
                 {
-                    HP_ON(68, 0);
+                    HP_ON(4, 0);
                 }
             }
+
+        }
+        public void PlayerGold(ref int gold)
+        {
+            MoveCursor(60,0);
+            Gold();
+            MoveCursor(66,0);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("{00} G",gold);
+            Console.ResetColor();
+
 
         }
         public void GAMEOVER()

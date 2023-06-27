@@ -28,15 +28,17 @@ namespace _230626_Crypt_of_necrodancer
         public void Run()
         {
             ClearCheck = false;
+            retry = false;
             playerHP = 3;
             hunterMove = 3;
             stage = 1;
             score = 0;
+            gold = 0;
 
             
 
 
-            while (playerHP > 0) // 게임오버시 탈출
+            while (playerHP > 0 ) // 게임오버시 탈출
             {
                 Position playerPos = new Position(MAP_SIZE_X / 2, MAP_SIZE_Y / 2);
 
@@ -69,16 +71,6 @@ namespace _230626_Crypt_of_necrodancer
                     {
                         map[height][width] = FLOOR;
                     }
-                }
-
-                // 출구 생성
-
-                int PortalHeight = random.Next(3, MAP_SIZE_Y - 2);
-                int PortalWidth = random.Next(3, MAP_SIZE_X - 2);
-
-                if (map[PortalHeight][PortalWidth] == FLOOR)
-                {
-                    map[PortalHeight][PortalWidth] = PORTAL;
                 }
 
                 // 네모난 방 생성
@@ -125,7 +117,19 @@ namespace _230626_Crypt_of_necrodancer
                         }
                     }
                 }
-               
+
+
+                // 출구 생성
+
+                int PortalHeight = random.Next(3, MAP_SIZE_Y - 2);
+                int PortalWidth = random.Next(3, MAP_SIZE_X - 2);
+
+                if (map[PortalHeight][PortalWidth] == FLOOR)
+                {
+                    map[PortalHeight][PortalWidth] = PORTAL;
+                }
+
+
                 // 장애물 생성
                 while (wallCount < WALL_VALUE)
                 {
@@ -183,6 +187,8 @@ namespace _230626_Crypt_of_necrodancer
                     // 헌터 이동
                     enemy.HunterMove(ref map, playerPos, ref hunterPositions, ref playerHP);
                     hunterMove++;
+                    greenSlimeMove++;
+                    blueSlimeMove++;
                     score++;
 
 
@@ -200,14 +206,45 @@ namespace _230626_Crypt_of_necrodancer
                     }
                    
 
-                    // 적 출력
+                    // 헌터 출력
                     foreach (var enemy in hunterPositions)
                     {
                         draw.MoveCursor(enemy.x * 2, enemy.y);
-                        draw.Enemy();
+                        draw.Hunter();
                     }
                     draw.PlayerHP(ref playerHP);
+                    draw.PlayerGold(ref gold);
 
+                    //// 그린 슬라임 생성
+                    while (greenSlimeCount == 0)
+                    {
+                        int slimeHeight = random.Next(3, MAP_SIZE_Y - 2);
+                        int slimeWidth = random.Next(3, MAP_SIZE_X - 2);
+
+                        if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR)
+                        {
+                            map[slimeHeight][slimeWidth] = ENEMY;
+                            greenSlimePositions.Add(new Position(slimeWidth, slimeHeight));
+                            greenSlimeCount++;
+                        }
+                    }
+                    //// 블루 슬라임 생성
+                    while (blueSlimeCount == 0)
+                    {
+                        int slimeHeight = random.Next(3, MAP_SIZE_Y - 2);
+                        int slimeWidth = random.Next(3, MAP_SIZE_X - 2);
+
+                        if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR && map[slimeHeight][slimeWidth + 1] == FLOOR && map[slimeHeight + 1][slimeWidth + 1] == FLOOR)
+                        {
+                            map[slimeHeight][slimeWidth] = ENEMY;
+                            blueSlimePositions.Add(new Position(slimeWidth, slimeHeight));
+                            blueSlimeCount++;
+                        }
+                    }
+
+                    // Slime 출력
+                    enemy.GreenSlimeMove(ref map, playerPos, ref greenSlimePositions, ref playerHP, ref greenSlimeMove);
+                    enemy.BlueSlimeMove(ref map, playerPos, ref blueSlimePositions, ref playerHP, ref blueSlimeMove);
 
                     // 스탑워치 시작
                     Stopwatch stopwatch = new Stopwatch();
@@ -220,6 +257,8 @@ namespace _230626_Crypt_of_necrodancer
                     //입력대기
                     while (true)
                     {
+                        draw.MoveCursor(32, 19);
+                        Console.WriteLine("       ");
                         // 버리는 타이밍 
                         if (stopwatch.ElapsedMilliseconds >= HEART_TIMING + 25)
                         {
@@ -257,15 +296,29 @@ namespace _230626_Crypt_of_necrodancer
                                                 break;
                                             }
                                         }
+                                        foreach (var enemy in greenSlimePositions)
+                                        {
+                                            if (enemy.x == playerPos.x && enemy.y == playerPos.y)
+                                            {
+                                                enemyToRemove = enemy;
+                                                break;
+                                            }
+                                        }
 
                                         if (enemyToRemove != null)
                                         {
+                                            map[playerPos.y][playerPos.x] = GOLD;
                                             draw.MoveCursor(playerPos.x * 2, playerPos.y);
-                                            draw.Floor(); // 적을 사망시킨 위치를 바닥으로 변경
+                                            draw.Gold(); // 적을 사망시킨 위치를 바닥으로 변경
                                             playerPos.y++;
                                             draw.MoveCursor(playerPos.x * 2, playerPos.y);
                                             draw.Player_Up();
                                             hunterPositions.Remove(enemyToRemove);
+
+                                            // 적을 해당 리스트에서 제거
+                                            hunterPositions.Remove(enemyToRemove);
+                                            greenSlimePositions.Remove(enemyToRemove);
+                                            blueSlimePositions.Remove(enemyToRemove);
                                         }
                                     }
 
@@ -283,6 +336,51 @@ namespace _230626_Crypt_of_necrodancer
                                         draw.Player_Down();
 
                                     }
+                                    // 플레이어와 적의 충돌 체크
+                                    if (map[playerPos.y][playerPos.x] == ENEMY)
+                                    {
+                                        Position enemyToRemove = null;
+
+                                        foreach (var enemy in hunterPositions)
+                                        {
+                                            if (enemy.x == playerPos.x && enemy.y == playerPos.y)
+                                            {
+                                                enemyToRemove = enemy;
+                                                break;
+                                            }
+                                        }
+                                        foreach (var enemy in greenSlimePositions)
+                                        {
+                                            if (enemy.x == playerPos.x && enemy.y == playerPos.y)
+                                            {
+                                                enemyToRemove = enemy;
+                                                break;
+                                            }
+                                        }
+                                        foreach (var enemy in blueSlimePositions)
+                                        {
+                                            if (enemy.x == playerPos.x && enemy.y == playerPos.y)
+                                            {
+                                                enemyToRemove = enemy;
+                                                break;
+                                            }
+                                        }
+                                        if (enemyToRemove != null)
+                                        {
+                                            map[playerPos.y][playerPos.x] = GOLD;
+                                            draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                            draw.Gold(); // 적을 사망시킨 위치를 바닥으로 변경
+                                            playerPos.y--;
+                                            draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                            draw.Player_Down();
+                                            hunterPositions.Remove(enemyToRemove);
+
+                                            // 적을 해당 리스트에서 제거
+                                            hunterPositions.Remove(enemyToRemove);
+                                            greenSlimePositions.Remove(enemyToRemove);
+                                            blueSlimePositions.Remove(enemyToRemove);
+                                        }
+                                    }
                                 }
 
                                 // 플레이어 ◀
@@ -297,6 +395,51 @@ namespace _230626_Crypt_of_necrodancer
                                         draw.Player_Left();
 
                                     }
+                                    // 플레이어와 적의 충돌 체크
+                                    if (map[playerPos.y][playerPos.x] == ENEMY)
+                                    {
+                                        Position enemyToRemove = null;
+
+                                        foreach (var enemy in hunterPositions)
+                                        {
+                                            if (enemy.x == playerPos.x && enemy.y == playerPos.y)
+                                            {
+                                                enemyToRemove = enemy;
+                                                break;
+                                            }
+                                        }
+                                        foreach (var enemy in greenSlimePositions)
+                                        {
+                                            if (enemy.x == playerPos.x && enemy.y == playerPos.y)
+                                            {
+                                                enemyToRemove = enemy;
+                                                break;
+                                            }
+                                        }
+                                        foreach (var enemy in blueSlimePositions)
+                                        {
+                                            if (enemy.x == playerPos.x && enemy.y == playerPos.y)
+                                            {
+                                                enemyToRemove = enemy;
+                                                break;
+                                            }
+                                        }
+                                        if (enemyToRemove != null)
+                                        {
+                                            map[playerPos.y][playerPos.x] = GOLD;
+                                            draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                            draw.Gold(); // 적을 사망시킨 위치를 바닥으로 변경
+                                            playerPos.x++;
+                                            draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                            draw.Player_Left();
+                                            hunterPositions.Remove(enemyToRemove);
+
+                                            // 적을 해당 리스트에서 제거
+                                            hunterPositions.Remove(enemyToRemove);
+                                            greenSlimePositions.Remove(enemyToRemove);
+                                            blueSlimePositions.Remove(enemyToRemove);
+                                        }
+                                    }
                                 }
 
                                 // 플레이어 ▶
@@ -310,6 +453,58 @@ namespace _230626_Crypt_of_necrodancer
                                         draw.MoveCursor(playerPos.x * 2, playerPos.y);
                                         draw.Player_Right();
                                     }
+                                    // 플레이어와 적의 충돌 체크
+                                    if (map[playerPos.y][playerPos.x] == ENEMY)
+                                    {
+                                        Position enemyToRemove = null;
+
+                                        foreach (var enemy in hunterPositions)
+                                        {
+                                            if (enemy.x == playerPos.x && enemy.y == playerPos.y)
+                                            {
+                                                enemyToRemove = enemy;
+                                                break;
+                                            }
+                                        }
+                                        foreach (var enemy in greenSlimePositions)
+                                        {
+                                            if (enemy.x == playerPos.x && enemy.y == playerPos.y)
+                                            {
+                                                enemyToRemove = enemy;
+                                                break;
+                                            }
+                                        }
+                                        foreach (var enemy in blueSlimePositions)
+                                        {
+                                            if (enemy.x == playerPos.x && enemy.y == playerPos.y)
+                                            {
+                                                enemyToRemove = enemy;
+                                                break;
+                                            }
+                                        }
+
+
+                                        if (enemyToRemove != null)
+                                        {
+                                            map[playerPos.y][playerPos.x] = GOLD;
+                                            draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                            draw.Gold(); // 적을 사망시킨 위치를 바닥으로 변경
+                                            playerPos.x--;
+                                            draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                            draw.Player_Right();
+                                            hunterPositions.Remove(enemyToRemove);
+
+                                            // 적을 해당 리스트에서 제거
+                                            hunterPositions.Remove(enemyToRemove);
+                                            greenSlimePositions.Remove(enemyToRemove);
+                                            blueSlimePositions.Remove(enemyToRemove);
+                                        }
+                                    }
+                                }
+                                if (key.Key == ConsoleKey.R)
+                                {
+                                    retry = true;
+                                    break;
                                 }
 
                                 //debug
@@ -317,8 +512,11 @@ namespace _230626_Crypt_of_necrodancer
                                 {
                                     draw.MoveCursor(72, 0);
                                     Console.WriteLine("[DEBUG]");
+
+
                                     draw.MoveCursor(72, 1);
                                     Console.WriteLine("Timing : {0}ms", stopwatch.ElapsedMilliseconds - HEART_TIMING);
+
                                 }
                                 //debug
 
@@ -335,6 +533,8 @@ namespace _230626_Crypt_of_necrodancer
                         draw.MoveCursor(playerPos.x * 2, playerPos.y);
                         draw.Player_Stop();
                         Console.Beep(150, 100);
+                        draw.MoveCursor(32, 19);
+                        Console.WriteLine("MISSED!");
 
                         //debug
                         if (DEBUG_MODE == true)
@@ -359,7 +559,22 @@ namespace _230626_Crypt_of_necrodancer
                         ClearCheck = true;
                         break;
                     }
-                    
+                    if (map[playerPos.y][playerPos.x] == GOLD)
+                    {
+                        map[playerPos.y][playerPos.x] = FLOOR;
+                        gold += 100;
+
+                    }
+
+                    //재시작
+                    if (retry == true)
+                    {
+                        Console.Clear();
+                        hunterPositions = new List<Position>();
+                        break;
+
+                    }
+
                     //게임 오버 판정
                     if (playerHP <= 0)
                     {
