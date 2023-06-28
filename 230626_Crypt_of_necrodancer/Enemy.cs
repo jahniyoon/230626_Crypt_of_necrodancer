@@ -134,7 +134,7 @@ namespace _230626_Crypt_of_necrodancer
                 int enemyY = enemyPos.y;
 
                 // 적 이동 로직 (플레이어를 추적)
-                if (enemyX < playerPos.x && map[enemyY][enemyX + 1] == FLOOR)
+                if (enemyX < playerPos.x && map[enemyY][enemyX + 1] != WALL && map[enemyY][enemyX + 1] != PORTAL)
                 {
                     map[enemyY][enemyX] = FLOOR;
                     map[enemyY][enemyX + 1] = ENEMY;
@@ -151,11 +151,12 @@ namespace _230626_Crypt_of_necrodancer
                         playerHP -= 1;
                         enemyPos.x--;
                     }
+                    map[enemyY][enemyX] = ENEMY;
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.Hunter();
 
                 }
-                else if (enemyX > playerPos.x && map[enemyY][enemyX - 1] == FLOOR)
+                else if (enemyX > playerPos.x && map[enemyY][enemyX - 1] != WALL && map[enemyY][enemyX - 1] != PORTAL)
                 {
                     map[enemyY][enemyX] = FLOOR;
                     map[enemyY][enemyX - 1] = ENEMY;
@@ -171,11 +172,12 @@ namespace _230626_Crypt_of_necrodancer
                         playerHP -= 1;
                         enemyPos.x++;
                     }
+                    map[enemyY][enemyX] = ENEMY;
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.Hunter();
 
                 }
-                else if (enemyY < playerPos.y && map[enemyY + 1][enemyX] == FLOOR)
+                else if (enemyY < playerPos.y && map[enemyY + 1][enemyX] != WALL && map[enemyY + 1][enemyX] != PORTAL)
                 {
                     map[enemyY][enemyX] = FLOOR;
                     map[enemyY+1][enemyX] = ENEMY;
@@ -185,16 +187,17 @@ namespace _230626_Crypt_of_necrodancer
                     if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
                     {
                         map[enemyY][enemyX] = FLOOR;
-                        map[enemyY+1][enemyX] = ENEMY;
+                        map[enemyY-1][enemyX] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                         draw.PlayerHurt();
                         playerHP -= 1;
                         enemyPos.y--;
                     }
+                    map[enemyY][enemyX] = ENEMY;
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.Hunter();
                 }
-                else if (enemyY > playerPos.y && map[enemyY - 1][enemyX] == FLOOR)
+                else if (enemyY > playerPos.y && map[enemyY - 1][enemyX] != WALL && map[enemyY - 1][enemyX] != PORTAL)
                 {
                     map[enemyY][enemyX] = FLOOR;
                     map[enemyY-1][enemyX] = ENEMY;
@@ -210,6 +213,7 @@ namespace _230626_Crypt_of_necrodancer
                         playerHP -= 1;
                         enemyPos.y++;
                     }
+                    map[enemyY][enemyX] = ENEMY;
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.Hunter();
 

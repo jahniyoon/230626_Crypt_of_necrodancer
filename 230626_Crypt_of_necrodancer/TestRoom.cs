@@ -18,6 +18,7 @@ namespace _230626_Crypt_of_necrodancer
         Draw draw = new Draw();
         Enemy enemy = new Enemy();
         RhythmBar rhythmBar = new RhythmBar();
+        Image image = new Image();
 
 
 
@@ -147,7 +148,7 @@ namespace _230626_Crypt_of_necrodancer
                         draw.MoveCursor(enemy.x * 2, enemy.y);
                         draw.Hunter();
                     }
-                    draw.PlayerHP(ref playerHP);
+                    draw.PlayerHP(ref playerHP, ref playerMaxHP);
 
 
                     // Slime 출력
@@ -455,7 +456,7 @@ namespace _230626_Crypt_of_necrodancer
                         draw.PlayerDead();
                         Thread.Sleep(1000);
                         Console.Clear();
-                        draw.GAMEOVER();
+                        image.GAMEOVER();
                         Thread.Sleep(1000);
                         Console.Clear();
                         hunterPositions = new List<Position>();

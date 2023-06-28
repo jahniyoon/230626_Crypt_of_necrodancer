@@ -90,6 +90,20 @@ namespace _230626_Crypt_of_necrodancer
             Console.Write("▦");
             Console.ResetColor();
         }
+        public void ShopBox()
+        {
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("▩");
+            Console.ResetColor();
+        }
+        public void HealBox()
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("♥");
+            Console.ResetColor();
+        }
         public void Floor()
         {
             Console.ForegroundColor = ConsoleColor.Black;
@@ -119,7 +133,7 @@ namespace _230626_Crypt_of_necrodancer
         }
         public void Stick()
         {
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write("▥");
             Console.ResetColor();
         }
@@ -175,60 +189,31 @@ namespace _230626_Crypt_of_necrodancer
             Console.ResetColor();
         }
 
-        public void PlayerHP(ref int playerHP)
+        public void PlayerHP(ref int playerHP, ref int playerMaxHP)
         {
-            if (playerHP >= 0)
+
+            for (int i = 0; i < playerMaxHP; i++)
             {
-                HP_OFF(0, 0);
-                HP_OFF(2, 0);
-                HP_OFF(4, 0);
-                if (playerHP >= 1)
-                {
-                    HP_ON(0, 0);
-                }
-                if (playerHP >= 2)
-                {
-                    HP_ON(2, 0);
-                }
-                if (playerHP >= 3)
-                {
-                    HP_ON(4, 0);
-                }
+                HP_OFF(i * 2, 0);
             }
+            for (int i = 0; i < playerHP; i++)
+            {
+                HP_ON(i * 2, 0);
+            }  
 
         }
         public void PlayerGold(ref int gold)
         {
-            MoveCursor(60,0);
+            MoveCursor(62,0);
             Gold();
-            MoveCursor(66,0);
+            MoveCursor(64,0);
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("{00} G",gold);
+            Console.Write("{00} G   ",gold);
             Console.ResetColor();
 
 
         }
-        public void GAMEOVER()
-        {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write("     _______  _______  __   __  _______ \n");
-            Console.Write("    |       ||   _   ||  |_|  ||       |\n");
-            Console.Write("    |    ___||  |_|  ||       ||    ___|\n");
-            Console.Write("    |   | __ |       ||       ||   |___ \n");
-            Console.Write("    |   ||  ||       ||       ||    ___|\n");
-            Console.Write("    |   |_| ||   _   || ||_|| ||   |___ \n");
-            Console.Write("    |_______||__| |__||_|   |_||_______|\n");
-            Console.Write("\n");
-            Console.Write("     _______  __   __  _______  ______   \n");
-            Console.Write("    |       ||  | |  ||       ||    _ |  \n");
-            Console.Write("    |   _   ||  |_|  ||    ___||   | ||  \n");
-            Console.Write("    |  | |  ||       ||   |___ |   |_||_ \n");
-            Console.Write("    |  |_|  ||       ||    ___||    __  |\n");
-            Console.Write("    |       | |     | |   |___ |   |  | |\n");
-            Console.Write("    |_______|  |___|  |_______||___|  |_|\n");
-            Console.ResetColor();
-
-        }
+       
 
 
     }

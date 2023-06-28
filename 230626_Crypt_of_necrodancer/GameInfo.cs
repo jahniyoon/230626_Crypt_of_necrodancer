@@ -26,6 +26,7 @@ namespace _230626_Crypt_of_necrodancer
         protected const int WALL_VALUE = 35;
         protected const int HEART_TIMING = 625;
 
+        protected int playerMaxHP = 3;
         protected int playerHP = 3;
         protected int playerDamage = 1;
         protected int gold = default;
@@ -34,6 +35,9 @@ namespace _230626_Crypt_of_necrodancer
 
         protected int stage = 1;
         protected int score = 0;
+
+
+        protected  int invenSize = default;
 
 
 
@@ -51,6 +55,10 @@ namespace _230626_Crypt_of_necrodancer
         protected List<Position> greenSlimePositions = new List<Position>();
         protected List<Position> blueSlimePositions = new List<Position>();
 
+        // 아이템 리스트
+        //protected String[] strings = { "막대기", "녹슨 검", "녹슨 방패", "병사의 검", "병사의 방패", "회복 포션", "다이아몬드" };
+        protected String[] strings = { "녹슨 검", "병사의 검", "왕가의 검", "하트 보관함", "하트 보관함 x 3", "회복 포션", "열쇠"};
+        protected String[] inventory = new string[99];
 
     }
 }

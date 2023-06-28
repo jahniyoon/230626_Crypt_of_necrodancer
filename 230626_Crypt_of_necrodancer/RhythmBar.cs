@@ -13,7 +13,6 @@ namespace _230626_Crypt_of_necrodancer
         const int EMPTY = 0;
         const int LEFT_STICK = 1;
         const int RIGHT_STICK = 2;
-        const int VOID_HEART = 3;
         const int MAX_HEIGHT = 3;
         const int MAX_WIDTH = 35;
         const int TEMPO = 23;
