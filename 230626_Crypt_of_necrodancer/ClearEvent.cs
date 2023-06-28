@@ -26,11 +26,11 @@ namespace _230626_Crypt_of_necrodancer
 
             int randomNum = random.Next(1,10);
 
-            if (randomNum >= 0)
+            if (randomNum <= 5)
             {
                 Shop(ref gold, ref playerHP,ref playerMaxHP,ref invenSize, ref strings, ref inventory);
             }
-            else if (randomNum <= 0)
+            else if (randomNum >= 6)
             {
                 Heal(ref playerHP, ref playerMaxHP, ref gold);
             }
@@ -40,9 +40,9 @@ namespace _230626_Crypt_of_necrodancer
         public void Shop(ref int Gold, ref int playerHP, ref int playerMaxHP, ref int invenSize, ref String[] strings, ref String[] inventory)
         {
             Dictionary<string, int> itemInventory = new Dictionary<string, int>();
-            itemInventory.Add("녹슨 검", 500);
-            itemInventory.Add("병사의 검", 1500);
-            itemInventory.Add("왕가의 검", 2500);
+            itemInventory.Add("거인의 대검", 500);
+            itemInventory.Add("롱롱 스피어", 1500);
+            itemInventory.Add("개사기템", 9999);
             itemInventory.Add("하트 보관함", 2000);
             itemInventory.Add("하트 보관함 x 3", 3000);
             itemInventory.Add("회복 포션", 500);
@@ -64,6 +64,7 @@ namespace _230626_Crypt_of_necrodancer
 
             draw.PlayerHP(ref playerHP, ref playerMaxHP);
             draw.PlayerGold(ref Gold);
+            draw.MoveCursor(1, 25);
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine(" ※ 1 ~ 3 : 아이템 선택    4 : 상점 나가기");

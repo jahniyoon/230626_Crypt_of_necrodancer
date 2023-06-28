@@ -194,8 +194,6 @@ namespace _230626_Crypt_of_necrodancer
 
                    
                     hunterMove++;
-                    greenSlimeMove++;
-                    blueSlimeMove++;
                     score++;
 
 
@@ -212,12 +210,12 @@ namespace _230626_Crypt_of_necrodancer
                         }
                     }
                     //// 그린 슬라임 생성
-                    while (greenSlimeCount == 0)
+                    while (greenSlimeCount < 3*stage)
                     {
                         int slimeHeight = random.Next(3, MAP_SIZE_Y - 2);
                         int slimeWidth = random.Next(3, MAP_SIZE_X - 2);
 
-                        if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR)
+                        if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight - 1][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR)
                         {
                             map[slimeHeight][slimeWidth] = ENEMY;
                             greenSlimePositions.Add(new Position(slimeWidth, slimeHeight));
@@ -226,12 +224,12 @@ namespace _230626_Crypt_of_necrodancer
                         }
                     }
                     //// 블루 슬라임 생성
-                    while (blueSlimeCount == 0)
+                    while (blueSlimeCount < 2*stage)
                     {
                         int slimeHeight = random.Next(3, MAP_SIZE_Y - 2);
                         int slimeWidth = random.Next(3, MAP_SIZE_X - 2);
 
-                        if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR && map[slimeHeight][slimeWidth + 1] == FLOOR && map[slimeHeight + 1][slimeWidth + 1] == FLOOR)
+                        if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth + 1] == FLOOR && map[slimeHeight][slimeWidth + 1] == FLOOR)
                         {
                             map[slimeHeight][slimeWidth] = ENEMY;
                             blueSlimePositions.Add(new Position(slimeWidth, slimeHeight));
@@ -248,8 +246,8 @@ namespace _230626_Crypt_of_necrodancer
 
                     
                     // Slime 출력
-                    enemy.GreenSlimeMove(ref map, playerPos, ref greenSlimePositions, ref playerHP, ref greenSlimeMove);
-                    enemy.BlueSlimeMove(ref map, playerPos, ref blueSlimePositions, ref playerHP, ref blueSlimeMove);
+                    enemy.GreenSlimeMove(ref map, playerPos, ref greenSlimePositions, ref playerHP);
+                    enemy.BlueSlimeMove(ref map, playerPos, ref blueSlimePositions, ref playerHP);
 
                     draw.PlayerHP(ref playerHP, ref playerMaxHP);
                     draw.PlayerGold(ref gold);

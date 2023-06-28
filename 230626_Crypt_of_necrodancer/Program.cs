@@ -10,7 +10,7 @@ namespace _230626_Crypt_of_necrodancer
     {
         static void Main(string[] args)
         {
-            Console.SetWindowSize(90, 25);
+            Console.SetWindowSize(90, 28);
             Console.CursorVisible = false;
 
             MainGame maingame = new MainGame();

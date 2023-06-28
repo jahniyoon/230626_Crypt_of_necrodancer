@@ -23,7 +23,7 @@ namespace _230626_Crypt_of_necrodancer
         protected const int ENEMY = 10;
 
 
-        protected const int WALL_VALUE = 35;
+        protected const int WALL_VALUE = 50;
         protected const int HEART_TIMING = 625;
 
         protected int playerMaxHP = 3;
@@ -57,7 +57,7 @@ namespace _230626_Crypt_of_necrodancer
 
         // 아이템 리스트
         //protected String[] strings = { "막대기", "녹슨 검", "녹슨 방패", "병사의 검", "병사의 방패", "회복 포션", "다이아몬드" };
-        protected String[] strings = { "녹슨 검", "병사의 검", "왕가의 검", "하트 보관함", "하트 보관함 x 3", "회복 포션", "열쇠"};
+        protected String[] strings = { "거인의 대검", "롱롱 스피어", "개사기템", "하트 보관함", "하트 보관함 x 3", "회복 포션", "열쇠"};
         protected String[] inventory = new string[99];
 
     }

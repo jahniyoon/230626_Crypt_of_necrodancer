@@ -152,8 +152,8 @@ namespace _230626_Crypt_of_necrodancer
 
 
                     // Slime 출력
-                    enemy.GreenSlimeMove(ref map, playerPos, ref greenSlimePositions, ref playerHP, ref greenSlimeMove);
-                    enemy.BlueSlimeMove(ref map, playerPos, ref blueSlimePositions, ref playerHP, ref blueSlimeMove);
+                    enemy.GreenSlimeMove(ref map, playerPos, ref greenSlimePositions, ref playerHP);
+                    enemy.BlueSlimeMove(ref map, playerPos, ref blueSlimePositions, ref playerHP);
 
                     
 
