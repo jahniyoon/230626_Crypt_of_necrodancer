@@ -189,19 +189,19 @@ namespace _230626_Crypt_of_necrodancer
                     draw.PlayerGold(ref gold);
 
 
-                    //게임 오버 판정
-                    if (playerHP <= 0)
-                    {
-                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
-                        draw.PlayerDead();
-                        Thread.Sleep(1000);
-                        Console.Clear();
-                        image.GAMEOVER();
-                        Thread.Sleep(1000);
-                        Console.Clear();
-                        hunterPositions = new List<Position>();
-                        break;
-                    } // 게임오버시 while
+                    ////게임 오버 판정
+                    //if (playerHP <= 0)
+                    //{
+                    //    draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                    //    draw.PlayerDead();
+                    //    Thread.Sleep(1000);
+                    //    Console.Clear();
+                    //    image.GAMEOVER();
+                    //    Thread.Sleep(1000);
+                    //    Console.Clear();
+                    //    hunterPositions = new List<Position>();
+                    //    break;
+                    //} // 게임오버시 while
 
                       //게임 오버 판정
                     if (bossHP <= 0)
@@ -212,7 +212,7 @@ namespace _230626_Crypt_of_necrodancer
                       
                         Thread.Sleep(2000);
                         Console.Clear();
-                        image.GAMEOVER();
+                        image.GAMEOVER(5,5);
                         Thread.Sleep(1000);
                         Console.Clear();
                         hunterPositions = new List<Position>();

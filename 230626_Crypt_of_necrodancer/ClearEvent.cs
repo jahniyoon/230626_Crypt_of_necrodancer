@@ -28,7 +28,7 @@ namespace _230626_Crypt_of_necrodancer
 
             if (randomNum <= 5)
             {
-                Shop(ref gold, ref playerHP,ref playerMaxHP,ref invenSize, ref strings, ref inventory);
+                Shop(ref gold, ref playerHP,ref playerMaxHP,ref invenSize, ref strings, ref inventory, ref stage, ref playerAttack);
             }
             else if (randomNum >= 6)
             {
@@ -37,16 +37,16 @@ namespace _230626_Crypt_of_necrodancer
         }
 
 
-        public void Shop(ref int Gold, ref int playerHP, ref int playerMaxHP, ref int invenSize, ref String[] strings, ref String[] inventory)
+        public void Shop(ref int Gold, ref int playerHP, ref int playerMaxHP, ref int invenSize, ref String[] strings, ref String[] inventory, ref int stage, ref int playerAttack)
         {
             Dictionary<string, int> itemInventory = new Dictionary<string, int>();
-            itemInventory.Add("거인의 대검", 500);
-            itemInventory.Add("롱롱 스피어", 1500);
-            itemInventory.Add("개사기템", 9999);
-            itemInventory.Add("하트 보관함", 2000);
-            itemInventory.Add("하트 보관함 x 3", 3000);
+            itemInventory.Add("하트 보관함", 200);
+            itemInventory.Add("큰 하트 보관함", 800);
+            itemInventory.Add("붕대", 100);
             itemInventory.Add("회복 포션", 500);
-            itemInventory.Add("열쇠", 5000);
+            itemInventory.Add("낡은 지도", 600);
+            itemInventory.Add("파워 포션", 500);
+            itemInventory.Add("뜨거운 여섯", 2000);
 
             // 초기화
             int ShopItemNum = default;
@@ -161,7 +161,7 @@ namespace _230626_Crypt_of_necrodancer
                             Gold = Gold - itemInventory[strings[ShopItemNum]];
                             inventory[invenSize] = strings[ShopItemNum];
                             invenSize++;
-                            itemInfo.ItemIs(ref buyItem, ref playerHP, ref playerMaxHP);
+                            itemInfo.ItemIs(ref buyItem, ref playerHP, ref playerMaxHP, ref stage, ref playerAttack);
                         }
 
                         draw.PlayerHP(ref playerHP, ref playerMaxHP);
@@ -185,7 +185,7 @@ namespace _230626_Crypt_of_necrodancer
                             Gold = Gold - itemInventory[strings[ShopItemNum + 1]];
                             inventory[invenSize] = strings[ShopItemNum + 1];
                             invenSize++;
-                        itemInfo.ItemIs(ref buyItem, ref playerHP, ref playerMaxHP);
+                            itemInfo.ItemIs(ref buyItem, ref playerHP, ref playerMaxHP, ref stage, ref playerAttack);
 
                         }
                         draw.PlayerHP(ref playerHP, ref playerMaxHP);
@@ -209,7 +209,7 @@ namespace _230626_Crypt_of_necrodancer
                             Gold = Gold - itemInventory[strings[ShopItemNum + 2]];
                             inventory[invenSize] = strings[ShopItemNum + 2];
                             invenSize++;
-                        itemInfo.ItemIs(ref buyItem, ref playerHP, ref playerMaxHP);
+                            itemInfo.ItemIs(ref buyItem, ref playerHP, ref playerMaxHP, ref stage, ref playerAttack);
                         }
 
                         draw.PlayerHP(ref playerHP, ref playerMaxHP);

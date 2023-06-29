@@ -79,7 +79,7 @@ namespace _230626_Crypt_of_necrodancer
         }
         public void BlueSlime()
         {
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.Write("●");
             Console.ResetColor();
 
@@ -105,6 +105,31 @@ namespace _230626_Crypt_of_necrodancer
             MoveCursor(left+2, top);
             Console.Write("▥");
             MoveCursor(left-2, top+1);
+            Console.Write("▧▤▨");
+            Console.ResetColor();
+
+
+        }
+        public void BossHarf(int left, int top)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            MoveCursor(left - 2, top - 1);
+            Console.Write("▨▤▧");
+            MoveCursor(left - 2, top);
+            Console.Write("▥");
+            Console.ResetColor();
+            MoveCursor(left, top);
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("▼");
+            Console.ResetColor();
+
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            MoveCursor(left + 2, top);
+            Console.Write("▥");
+            MoveCursor(left - 2, top + 1);
             Console.Write("▧▤▨");
             Console.ResetColor();
 
@@ -226,7 +251,7 @@ namespace _230626_Crypt_of_necrodancer
         public void Empty()
         {
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write("■");
+            Console.Write("  ");
             Console.ResetColor();
 
         }
@@ -234,6 +259,12 @@ namespace _230626_Crypt_of_necrodancer
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("◐");
+            Console.ResetColor();
+        }
+        public void HeartItem()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("♥");
             Console.ResetColor();
         }
         public void Stick()
@@ -277,6 +308,21 @@ namespace _230626_Crypt_of_necrodancer
 
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Write("■");
+            Console.ResetColor();
+        }
+        public void DeadHeart(int left, int top)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            MoveCursor(left + 2, top);
+            Console.Write("  ");
+            MoveCursor(left + 6, top);
+            Console.Write("  ");
+            MoveCursor(left, top + 1);
+            Console.Write("          ");
+            MoveCursor(left + 2, top + 2);
+            Console.Write("      ");
+            MoveCursor(left + 4, top + 3);
+            Console.Write("  ");
             Console.ResetColor();
         }
         public void HP_ON(int left, int top)

@@ -40,7 +40,7 @@ namespace _230626_Crypt_of_necrodancer
         public void TitleLogo(int x, int y)
         {
 
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             draw.MoveCursor(x, y);
             Console.WriteLine("       ______  __                  _____       ");
             draw.MoveCursor(x, y + 1);
@@ -63,6 +63,36 @@ namespace _230626_Crypt_of_necrodancer
             Console.WriteLine("/_____/ /_/    \\___/\\__,_/ /_/|_| \\___//_/     ");
 
             Console.ResetColor();
+
+        }
+
+        public void Synopsis(int x, int y)
+        {
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            draw.MoveCursor(x, y);
+            Console.WriteLine("           _____   _____");
+            draw.MoveCursor(x, y + 1);
+            Console.WriteLine("          /     \\ /     \\");
+            draw.MoveCursor(x, y + 2);
+            Console.WriteLine("     ,   |       '       |");
+            draw.MoveCursor(x, y + 3);
+            Console.WriteLine("     I __L________       L__");
+            draw.MoveCursor(x, y + 4);
+            Console.WriteLine("O====IE__________/     ./___>");
+            draw.MoveCursor(x, y + 5);
+            Console.WriteLine("     I      \\.       ./");
+            draw.MoveCursor(x, y + 6);
+            Console.WriteLine("     `        \\.   ./");
+            draw.MoveCursor(x, y + 7);
+            Console.WriteLine("                \\ /");
+            draw.MoveCursor(x, y + 8);
+            Console.WriteLine("                 '");
+
+            draw.MoveCursor(x, y + 9);
+
+            Console.ResetColor();
+
 
         }
         public void TitleBox()
@@ -218,25 +248,51 @@ namespace _230626_Crypt_of_necrodancer
             }
         }
         // heal box
-        public void GAMEOVER()
+        //public void GAMEOVER()
+        //{
+        //    Console.ForegroundColor = ConsoleColor.Magenta;
+        //    Console.Write("     _______  _______  __   __  _______ \n");
+        //    Console.Write("    |       ||   _   ||  |_|  ||       |\n");
+        //    Console.Write("    |    ___||  |_|  ||       ||    ___|\n");
+        //    Console.Write("    |   | __ |       ||       ||   |___ \n");
+        //    Console.Write("    |   ||  ||       ||       ||    ___|\n");
+        //    Console.Write("    |   |_| ||   _   || ||_|| ||   |___ \n");
+        //    Console.Write("    |_______||__| |__||_|   |_||_______|\n");
+        //    Console.Write("\n");
+        //    Console.Write("     _______  __   __  _______  ______   \n");
+        //    Console.Write("    |       ||  | |  ||       ||    _ |  \n");
+        //    Console.Write("    |   _   ||  |_|  ||    ___||   | ||  \n");
+        //    Console.Write("    |  | |  ||       ||   |___ |   |_||_ \n");
+        //    Console.Write("    |  |_|  ||       ||    ___||    __  |\n");
+        //    Console.Write("    |       | |     | |   |___ |   |  | |\n");
+        //    Console.Write("    |_______|  |___|  |_______||___|  |_|\n");
+        //    Console.ResetColor();
+
+        //}
+
+        public void GAMEOVER(int x, int y)
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write("     _______  _______  __   __  _______ \n");
-            Console.Write("    |       ||   _   ||  |_|  ||       |\n");
-            Console.Write("    |    ___||  |_|  ||       ||    ___|\n");
-            Console.Write("    |   | __ |       ||       ||   |___ \n");
-            Console.Write("    |   ||  ||       ||       ||    ___|\n");
-            Console.Write("    |   |_| ||   _   || ||_|| ||   |___ \n");
-            Console.Write("    |_______||__| |__||_|   |_||_______|\n");
-            Console.Write("\n");
-            Console.Write("     _______  __   __  _______  ______   \n");
-            Console.Write("    |       ||  | |  ||       ||    _ |  \n");
-            Console.Write("    |   _   ||  |_|  ||    ___||   | ||  \n");
-            Console.Write("    |  | |  ||       ||   |___ |   |_||_ \n");
-            Console.Write("    |  |_|  ||       ||    ___||    __  |\n");
-            Console.Write("    |       | |     | |   |___ |   |  | |\n");
-            Console.Write("    |_______|  |___|  |_______||___|  |_|\n");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            draw.MoveCursor(x, y);
+            Console.Write(" _______  _______  _______  _______    _______           _______  _______ \r\n");
+            draw.MoveCursor(x, y+1);
+            Console.Write("(  ____ \\(  ___  )(       )(  ____ \\  (  ___  )|\\     /|(  ____ \\(  ____ )\r\n");
+            draw.MoveCursor(x, y+2);
+            Console.Write("| (    \\/| (   ) || () () || (    \\/  | (   ) || )   ( || (    \\/| (    )|\r\n");
+            draw.MoveCursor(x, y+3);
+            Console.Write("| |      | (___) || || || || (__      | |   | || |   | || (__    | (____)|\r\n");
+            draw.MoveCursor(x, y+4);
+            Console.Write("| | ____ |  ___  || |(_)| ||  __)     | |   | |( (   ) )|  __)   |     __)\r\n");
+            draw.MoveCursor(x, y+5);
+            Console.Write("| | \\_  )| (   ) || |   | || (        | |   | | \\ \\_/ / | (      | (\\ (   \r\n");
+            draw.MoveCursor(x, y+6);
+            Console.Write("| (___) || )   ( || )   ( || (____/\\  | (___) |  \\   /  | (____/\\| ) \\ \\__\r\n");
+            draw.MoveCursor(x, y+7);
+            Console.Write("(_______)|/     \\||/     \\|(_______/  (_______)   \\_/   (_______/|/   \\__/\r\n");
             Console.ResetColor();
+
+
 
         }
 
