@@ -64,7 +64,7 @@ namespace _230626_Crypt_of_necrodancer
 
         public void Hunter()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write("◈");
             Console.ResetColor();
 
@@ -75,11 +75,109 @@ namespace _230626_Crypt_of_necrodancer
             Console.Write("●");
             Console.ResetColor();
 
+
         }
         public void BlueSlime()
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.Write("●");
+            Console.ResetColor();
+
+        }
+        
+        public void Boss(int left, int top)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.Red;
+            MoveCursor(left-2, top-1);
+            Console.Write("▨▤▧");
+            MoveCursor(left-2, top);
+            Console.Write("▥");
+            Console.ResetColor();
+            MoveCursor(left, top);
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("▼");
+            Console.ResetColor();
+
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.Red;
+            MoveCursor(left+2, top);
+            Console.Write("▥");
+            MoveCursor(left-2, top+1);
+            Console.Write("▧▤▨");
+            Console.ResetColor();
+
+
+        }
+        public void BossHurt(int left, int top)
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            MoveCursor(left - 2, top - 1);
+            Console.Write("▨▤▧");
+            MoveCursor(left - 2, top);
+            Console.Write("▥");
+            Console.ResetColor();
+            MoveCursor(left, top);
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("▼");
+            Console.ResetColor();
+
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            MoveCursor(left + 2, top);
+            Console.Write("▥");
+            MoveCursor(left - 2, top + 1);
+            Console.Write("▧▤▨");
+            Console.ResetColor();
+
+
+        }
+        public void BossDead(int left, int top)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            MoveCursor(left - 2, top - 1);
+            Console.Write("▨▤▧");
+            MoveCursor(left - 2, top);
+            Console.Write("▥");
+            Console.ResetColor();
+            MoveCursor(left, top);
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("◈");
+            Console.ResetColor();
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            MoveCursor(left + 2, top);
+            Console.Write("▥");
+            MoveCursor(left - 2, top + 1);
+            Console.Write("▧▤▨");
+            Console.ResetColor();
+
+
+        }
+        public void BossFloor(int left, int top)
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Black;
+            MoveCursor(left - 2, top - 1);
+            Console.Write("▦▦▦");
+            MoveCursor(left - 2, top);
+            Console.Write("▦▦▦");
+                       MoveCursor(left - 2, top + 1);
+            Console.Write("▦▦▦");
+            Console.ResetColor();
+
+
+        }
+        public void BossAttack()
+        {
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write("▒▒");
             Console.ResetColor();
 
         }
@@ -106,8 +204,9 @@ namespace _230626_Crypt_of_necrodancer
         }
         public void Floor()
         {
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write("▒▒");
+            Console.Write("▦");
             Console.ResetColor();
         }
         public void Portal()

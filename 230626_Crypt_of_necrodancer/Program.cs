@@ -15,11 +15,13 @@ namespace _230626_Crypt_of_necrodancer
 
             MainGame maingame = new MainGame();
             RhythmBar bar = new RhythmBar();
-            TestRoom testroom = new TestRoom();
+            BossStage testroom = new BossStage();
 
             while (true)
             {
+                maingame.Title();
                 maingame.Run();
+
                 //testroom.Run();
 
                 //bar.Bar();

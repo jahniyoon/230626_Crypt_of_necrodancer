@@ -1,60 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics;
-
 
 namespace _230626_Crypt_of_necrodancer
 {
-    internal class MainGame : GameInfo
+    internal class TestRoom : GameInfo
     {
         public static bool controlTiming = false;
 
 
         int[][] map = new int[MAP_SIZE_X][];
-        int wallCount = default;  // 벽 개수
 
         Draw draw = new Draw();
-        Image image = new Image();
         Enemy enemy = new Enemy();
-        ClearEvent clearevent = new ClearEvent();
         RhythmBar rhythmBar = new RhythmBar();
+        Image image = new Image();
 
 
-        public void Title()
-        {
 
-
-        }
 
 
         public void Run()
         {
+
             ClearCheck = false;
-            playerHP = 3;
-            playerMaxHP = 3;
+            playerHP = 15;
+            playerMaxHP = 15;
             hunterMove = 3;
             stage = 1;
             score = 0;
             gold = 0;
+            bossHP = 30;
 
-            
-
-
-            while (playerHP > 0 ) // 게임오버시 탈출
+            while (playerHP > 0) // 게임오버시 탈출
             {
-                Position playerPos = new Position(MAP_SIZE_X / 2, MAP_SIZE_Y / 2);
+
                 retry = false;
 
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                draw.MoveCursor(0, 19);
-                Console.Write("Score{00}", score);
-                draw.MoveCursor(64, 19);
-                Console.Write("Stage{00}", stage);
-                Console.ResetColor();
+                Position playerPos = new Position(MAP_SIZE_X / 2, MAP_SIZE_Y / 2);
+                Position BossPos = new Position(MAP_SIZE_X / 2, 4);
 
 
                 draw.MoveCursor(0, 0);
@@ -79,82 +67,9 @@ namespace _230626_Crypt_of_necrodancer
                         map[height][width] = FLOOR;
                     }
                 }
+
                
 
-                // 네모난 방 생성
-                int roomSize = random.Next(5, 10); // 랜덤한 방 크기 (3부터 14까지)
-                int startX = random.Next(1, MAP_SIZE_X - roomSize - 1); // 시작 X 좌표 (벽과 겹치지 않도록 범위 조절)
-                int startY = random.Next(2, MAP_SIZE_Y - roomSize - 1); // 시작 Y 좌표 (벽과 겹치지 않도록 범위 조절)
-                int doorSide = random.Next(4); // 문이 위치할 방의 한 변 (0: 위쪽, 1: 오른쪽, 2: 아래쪽, 3: 왼쪽)
-
-                for (int height = startY; height < startY + roomSize; height++)
-                {
-                    for (int width = startX; width < startX + roomSize; width++)
-                    {
-                        // 방 내부
-                        if (height > startY && height < startY + roomSize - 1 && width > startX && width < startX + roomSize - 1)
-                        {
-                            map[height][width] = FLOOR;
-                        }
-                        // 방과 겹치는 외곽 벽
-                        else
-                        {
-                            map[height][width] = WALL;
-                        }
-
-                        // 문 생성
-                        if (doorSide == 0 && height == startY && width >= startX && width <= startX + roomSize - 1)
-                        {
-                            map[height][width] = FLOOR;
-                            break; // 한 칸만 문이 위치하도록 하기 위해 반복문 종료
-                        }
-                        else if (doorSide == 1 && width == startX + roomSize - 1 && height >= startY && height <= startY + roomSize - 1)
-                        {
-                            map[height][width] = FLOOR;
-                            break;
-                        }
-                        else if (doorSide == 2 && height == startY + roomSize - 1 && width >= startX && width <= startX + roomSize - 1)
-                        {
-                            map[height][width] = FLOOR;
-                            break;
-                        }
-                        else if (doorSide == 3 && width == startX && height >= startY && height <= startY + roomSize - 1)
-                        {
-                            map[height][width] = FLOOR;
-                            break;
-                        }
-                    }
-                }
-
-
-
-
-                // 장애물 생성
-                while (wallCount < WALL_VALUE)
-                {
-                    int randomHeight = random.Next(3, MAP_SIZE_Y - 2);
-                    int randomWidth = random.Next(3, MAP_SIZE_X - 2);
-
-                    if (map[randomHeight][randomWidth] == FLOOR && randomHeight != MAP_SIZE_Y / 2 || randomWidth != MAP_SIZE_X / 2)
-                    {
-                        map[randomHeight][randomWidth] = WALL;
-                        wallCount++;
-                    }
-                }
-                wallCount = 0;
-
-                // 출구 생성
-                while (true)
-                {
-                    int PortalHeight = random.Next(3, MAP_SIZE_Y - 2);
-                    int PortalWidth = random.Next(3, MAP_SIZE_X - 2);
-
-                    if (map[PortalHeight][PortalWidth] == FLOOR && PortalHeight != MAP_SIZE_Y / 2 || PortalHeight != MAP_SIZE_X / 2)
-                    {
-                        map[PortalHeight][PortalWidth] = PORTAL;
-                        break;
-                    }
-                }
 
                 // 출력 파트
                 for (int height = 0; height < MAP_SIZE_Y; height++)
@@ -170,89 +85,108 @@ namespace _230626_Crypt_of_necrodancer
                             draw.Empty();
 
                         }
-                        else if (map[height][width] == FLOOR)
+                        else if (map[height][width] == FLOOR|| map[height][width] == ENEMY)
                         {
                             draw.Floor();
                         }
-                        else if (map[height][width] == PORTAL)
-                        {
-                            draw.Portal();
-                        }
+                        
                     }
                     Console.WriteLine();
                 }
 
+                map[playerPos.y][playerPos.x] = PLAYER;
+
+                //보스 생성
+                for (int i = 0; i < 3 ; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        map[BossPos.y-1+i][BossPos.x-1+j] = BOSS;
+                    }
+                }
+
+
+                // 헌터 생성
+                if (hunterMove == 3) // 3턴마다 적 생성
+                {
+                    int enemyY = random.Next(2, MAP_SIZE_Y - 2);
+                    int enemyX = random.Next(2, MAP_SIZE_X - 2);
+
+                    if (map[enemyY][enemyX] == FLOOR )
+                    {
+                        map[enemyY][enemyX] = ENEMY;
+                        hunterPositions.Add(new Position(enemyX, enemyY)); // 적의 위치를 리스트에 추가
+                        hunterMove++;
+
+                    }
+                }
+                //// 그린 슬라임 생성
+                while (greenSlimeCount < 3 * stage)
+                {
+                    int slimeHeight = random.Next(3, MAP_SIZE_Y - 2);
+                    int slimeWidth = random.Next(3, MAP_SIZE_X - 2);
+
+                    if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight - 1][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR)
+                    {
+                        map[slimeHeight][slimeWidth] = ENEMY;
+                        greenSlimePositions.Add(new Position(slimeWidth, slimeHeight));
+                        greenSlimeCount++;
+                        break;
+                    }
+                }
+                //// 블루 슬라임 생성
+                while (blueSlimeCount < 2 * stage)
+                {
+                    int slimeHeight = random.Next(3, MAP_SIZE_Y - 2);
+                    int slimeWidth = random.Next(3, MAP_SIZE_X - 2);
+
+                    if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth + 1] == FLOOR && map[slimeHeight][slimeWidth + 1] == FLOOR)
+                    {
+                        map[slimeHeight][slimeWidth] = ENEMY;
+                        blueSlimePositions.Add(new Position(slimeWidth, slimeHeight));
+                        blueSlimeCount++;
+                        break;
+                    }
+                }
+
+
                 // 캐릭터 생성
                 draw.MoveCursor(playerPos.x * 2, playerPos.y);
                 draw.Player();
+                draw.MoveCursor(30, 0);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("[Debug ROOM]");
+                Console.ResetColor();
+
 
                 // 플레이어, 적 이동
                 while (true)
                 {
-
-
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     draw.MoveCursor(0, 19);
-                    Console.Write("Score{00}", score);
+                    Console.Write("[Score] {00}", score);
                     Console.ResetColor();
 
-                   
-                    hunterMove++;
                     score++;
-
-
-                    // 헌터 생성
-                    if (hunterMove % 3 == 0) // 3턴마다 적 생성
-                    {
-                        int enemyY = random.Next(2, MAP_SIZE_Y - 2);
-                        int enemyX = random.Next(2, MAP_SIZE_X - 2);
-
-                        if (map[enemyY][enemyX] == FLOOR && map[enemyY][enemyX] == map[playerPos.y][playerPos.x])
-                        {
-                            map[enemyY][enemyX] = ENEMY;
-                            hunterPositions.Add(new Position(enemyX, enemyY)); // 적의 위치를 리스트에 추가
-                        }
-                    }
-                    //// 그린 슬라임 생성
-                    while (greenSlimeCount < 3*stage)
-                    {
-                        int slimeHeight = random.Next(3, MAP_SIZE_Y - 2);
-                        int slimeWidth = random.Next(3, MAP_SIZE_X - 2);
-
-                        if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight - 1][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR)
-                        {
-                            map[slimeHeight][slimeWidth] = ENEMY;
-                            greenSlimePositions.Add(new Position(slimeWidth, slimeHeight));
-                            greenSlimeCount++;
-                            break;
-                        }
-                    }
-                    //// 블루 슬라임 생성
-                    while (blueSlimeCount < 2*stage)
-                    {
-                        int slimeHeight = random.Next(3, MAP_SIZE_Y - 2);
-                        int slimeWidth = random.Next(3, MAP_SIZE_X - 2);
-
-                        if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth + 1] == FLOOR && map[slimeHeight][slimeWidth + 1] == FLOOR)
-                        {
-                            map[slimeHeight][slimeWidth] = ENEMY;
-                            blueSlimePositions.Add(new Position(slimeWidth, slimeHeight));
-                            blueSlimeCount++;
-                            break;
-                        }
-                    }
-
 
                     // 헌터 이동
                     enemy.HunterMove(ref map, ref playerPos, ref hunterPositions, ref playerHP);
+                   
+
+                    // 헌터 출력
+                    foreach (var enemy in hunterPositions)
+                    {
+                        draw.MoveCursor(enemy.x * 2, enemy.y);
+                        draw.Hunter();
+                    }
 
                     // Slime 출력
                     enemy.GreenSlimeMove(ref map, ref playerPos, ref greenSlimePositions, ref playerHP);
                     enemy.BlueSlimeMove(ref map, ref playerPos, ref blueSlimePositions, ref playerHP);
+                    enemy.Boss(ref map, ref playerPos, ref BossPos, ref playerHP, ref bossHP);
 
                     draw.PlayerHP(ref playerHP, ref playerMaxHP);
                     draw.PlayerGold(ref gold);
-
 
 
                     //게임 오버 판정
@@ -261,6 +195,22 @@ namespace _230626_Crypt_of_necrodancer
                         draw.MoveCursor(playerPos.x * 2, playerPos.y);
                         draw.PlayerDead();
                         Thread.Sleep(1000);
+                        Console.Clear();
+                        image.GAMEOVER();
+                        Thread.Sleep(1000);
+                        Console.Clear();
+                        hunterPositions = new List<Position>();
+                        break;
+                    } // 게임오버시 while
+
+                      //게임 오버 판정
+                    if (bossHP <= 0)
+                    {
+                      
+                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                        draw.BossDead(BossPos.x * 2, BossPos.y);
+                      
+                        Thread.Sleep(2000);
                         Console.Clear();
                         image.GAMEOVER();
                         Thread.Sleep(1000);
@@ -299,7 +249,25 @@ namespace _230626_Crypt_of_necrodancer
                                 // 플레이어 ▲
                                 if (key.Key == ConsoleKey.W || key.Key == ConsoleKey.UpArrow)
                                 {
-                                    if (map[playerPos.y - 1][playerPos.x] != WALL)
+                                    if (map[playerPos.y-1][playerPos.x] == BOSS)
+                                    {
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Player_Up();
+                                        bossHP -= playerAttack;
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.Boss(BossPos.x * 2, BossPos.y);
+                                        Thread.Sleep(50);
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.BossHurt(BossPos.x * 2, BossPos.y);
+                                        Thread.Sleep(50);
+
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.Boss(BossPos.x * 2, BossPos.y);
+                                       
+
+                                    }
+
+                                    else if (map[playerPos.y - 1][playerPos.x] != WALL)
                                     {
                                         playerPos.y--;
                                         draw.MoveCursor(playerPos.x * 2, playerPos.y);
@@ -345,13 +313,32 @@ namespace _230626_Crypt_of_necrodancer
                                             blueSlimePositions.Remove(enemyToRemove);
                                         }
                                     }
+                                    
 
                                 }
 
                                 // 플레이어 ▼
                                 if (key.Key == ConsoleKey.S || key.Key == ConsoleKey.DownArrow)
                                 {
-                                    if (map[playerPos.y + 1][playerPos.x] != WALL)
+                                    if (map[playerPos.y + 1][playerPos.x] == BOSS)
+                                    {
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Player_Down();
+                                        bossHP -= playerAttack;
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.Boss(BossPos.x * 2, BossPos.y);
+                                        Thread.Sleep(50);
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.BossHurt(BossPos.x * 2, BossPos.y);
+                                        Thread.Sleep(50);
+
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.Boss(BossPos.x * 2, BossPos.y);
+                                        
+
+                                    }
+
+                                    else if (map[playerPos.y + 1][playerPos.x] != WALL)
                                     {
                                         draw.MoveCursor(playerPos.x * 2, playerPos.y);
                                         draw.Floor();
@@ -410,7 +397,25 @@ namespace _230626_Crypt_of_necrodancer
                                 // 플레이어 ◀
                                 if (key.Key == ConsoleKey.A || key.Key == ConsoleKey.LeftArrow)
                                 {
-                                    if (map[playerPos.y][playerPos.x - 1] != WALL)
+                                    if (map[playerPos.y][playerPos.x - 1] == BOSS)
+                                    {
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Player_Left();
+                                        bossHP -= playerAttack;
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.Boss(BossPos.x * 2, BossPos.y);
+                                        Thread.Sleep(50);
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.BossHurt(BossPos.x * 2, BossPos.y);
+                                        Thread.Sleep(50);
+
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.Boss(BossPos.x * 2, BossPos.y);
+                                        
+
+                                    }
+
+                                    else if (map[playerPos.y][playerPos.x - 1] != WALL)
                                     {
                                         draw.MoveCursor(playerPos.x * 2, playerPos.y);
                                         draw.Floor();
@@ -469,7 +474,25 @@ namespace _230626_Crypt_of_necrodancer
                                 // 플레이어 ▶
                                 if (key.Key == ConsoleKey.D || key.Key == ConsoleKey.RightArrow)
                                 {
-                                    if (map[playerPos.y][playerPos.x + 1] != WALL)
+                                    if (map[playerPos.y][playerPos.x + 1] == BOSS)
+                                    {
+                                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                                        draw.Player_Right();
+                                        bossHP -= playerAttack;
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.Boss(BossPos.x * 2, BossPos.y);
+                                        Thread.Sleep(50);
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.BossHurt(BossPos.x * 2, BossPos.y);
+                                        Thread.Sleep(50);
+
+                                        draw.MoveCursor(BossPos.x * 2, BossPos.y);
+                                        draw.Boss(BossPos.x * 2, BossPos.y);
+                                      
+
+                                    }
+
+                                    else if (map[playerPos.y][playerPos.x + 1] != WALL)
                                     {
                                         draw.MoveCursor(playerPos.x * 2, playerPos.y);
                                         draw.Floor();
@@ -529,8 +552,9 @@ namespace _230626_Crypt_of_necrodancer
                                 {
                                     score = 0;
                                     gold = 0;
-                                    playerHP = 3;
-                                    playerMaxHP = 3;
+                                    playerHP = 15;
+                                    playerMaxHP = 15;
+                                    hunterMove = 3;
                                     retry = true;
                                     break;
                                 }
@@ -545,6 +569,10 @@ namespace _230626_Crypt_of_necrodancer
                                     draw.MoveCursor(72, 1);
                                     Console.WriteLine("Timing : {0}ms", stopwatch.ElapsedMilliseconds - HEART_TIMING);
 
+                                    draw.MoveCursor(72, 3);
+                                    Console.WriteLine("Boss HP : {0}", bossHP);
+
+
                                 }
                                 //debug
 
@@ -554,7 +582,7 @@ namespace _230626_Crypt_of_necrodancer
                         }
                         // 입력 if 종료
                     }
-                    // 입력대기 while 종료
+                    // 입력대기 while 종료  
 
                     if (!inputSuccess)
                     {
@@ -579,18 +607,6 @@ namespace _230626_Crypt_of_necrodancer
                     }
 
 
-                    if (map[playerPos.y][playerPos.x] == PORTAL) // 포탈을 탔을 때
-                    {
-                        stage++;
-                        Console.Clear();
-                        hunterPositions = new List<Position>();
-                        ClearCheck = true;
-
-                        clearevent.Run(ref gold, ref playerHP, ref playerMaxHP);
-                        Console.Clear();
-
-                        break;
-                    }
                     if (map[playerPos.y][playerPos.x] == GOLD)
                     {
                         map[playerPos.y][playerPos.x] = FLOOR;
@@ -614,9 +630,5 @@ namespace _230626_Crypt_of_necrodancer
             // } while 종료 게임오버시 탈출
         }
         // } Run 종료
-
-
-
-
     }
 }

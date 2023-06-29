@@ -20,7 +20,11 @@ namespace _230626_Crypt_of_necrodancer
         protected const int WALL = 1;
         protected const int PORTAL = 2;
         protected const int GOLD = 3;
+        protected const int PLAYER = 999;
         protected const int ENEMY = 10;
+        protected const int BOSS = 99;
+        protected const int BOSSATTACK = 98;
+
 
 
         protected const int WALL_VALUE = 50;
@@ -28,7 +32,11 @@ namespace _230626_Crypt_of_necrodancer
 
         protected int playerMaxHP = 3;
         protected int playerHP = 3;
+        protected int playerAttack = 1;
         protected int playerDamage = 1;
+
+        protected int bossHP = 30;
+
         protected int gold = default;
         protected bool ClearCheck = false;
         protected bool retry = false;
@@ -48,6 +56,11 @@ namespace _230626_Crypt_of_necrodancer
 
         protected int blueSlimeMove = default;     // 블루 슬라임
         protected int blueSlimeCount = default;
+
+        protected int bossMove = default;     // 보스 무브
+        protected int bossAttack = default;
+        protected int bossAttackReady = default;
+        protected int bossTurn = default;
 
 
         // 적 리스트
