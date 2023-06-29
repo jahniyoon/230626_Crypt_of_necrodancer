@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace _230626_Crypt_of_necrodancer
@@ -20,6 +21,7 @@ namespace _230626_Crypt_of_necrodancer
             while (true)
             {
                 maingame.Title();
+                Console.Clear();
                 maingame.Run();
 
                 //testroom.Run();

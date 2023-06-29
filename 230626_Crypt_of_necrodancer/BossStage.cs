@@ -106,20 +106,9 @@ namespace _230626_Crypt_of_necrodancer
                 }
 
 
-                // 헌터 생성
-                if (hunterMove == 3) // 3턴마다 적 생성
-                {
-                    int enemyY = random.Next(2, MAP_SIZE_Y - 2);
-                    int enemyX = random.Next(2, MAP_SIZE_X - 2);
 
-                    if (map[enemyY][enemyX] == FLOOR )
-                    {
-                        map[enemyY][enemyX] = ENEMY;
-                        hunterPositions.Add(new Position(enemyX, enemyY)); // 적의 위치를 리스트에 추가
-                        hunterMove++;
+                   
 
-                    }
-                }
                 //// 그린 슬라임 생성
                 while (greenSlimeCount < 3 * stage)
                 {
@@ -168,6 +157,14 @@ namespace _230626_Crypt_of_necrodancer
                     Console.ResetColor();
 
                     score++;
+
+                    hunterMove++;
+
+                    if (hunterMove % 10 == 0) // 5턴마다 적 생성
+                    {
+                        map[1][1] = ENEMY;
+                        hunterPositions.Add(new Position(1, 2)); // 적의 위치를 리스트에 추가
+                    }
 
                     // 헌터 이동
                     enemy.HunterMove(ref map, ref playerPos, ref hunterPositions, ref playerHP);

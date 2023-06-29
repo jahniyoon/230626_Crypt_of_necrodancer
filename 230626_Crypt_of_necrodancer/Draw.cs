@@ -64,7 +64,7 @@ namespace _230626_Crypt_of_necrodancer
 
         public void Hunter()
         {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("◈");
             Console.ResetColor();
 
@@ -188,7 +188,13 @@ namespace _230626_Crypt_of_necrodancer
             Console.Write("▦");
             Console.ResetColor();
         }
-        public void ShopBox()
+        public void TitleBox()
+        {
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("▣");
+            Console.ResetColor();
+        }public void ShopBox()
         {
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
             Console.ForegroundColor = ConsoleColor.Black;

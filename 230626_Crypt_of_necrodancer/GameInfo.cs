@@ -42,6 +42,7 @@ namespace _230626_Crypt_of_necrodancer
         protected bool retry = false;
 
         protected int stage = 1;
+        protected int stageturn = 0;
         protected int score = 0;
 
 

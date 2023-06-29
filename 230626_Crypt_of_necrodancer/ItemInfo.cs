@@ -27,6 +27,12 @@ namespace _230626_Crypt_of_necrodancer
                 Console.WriteLine("체력을 회복합니다.");
 
                 playerHP++;
+                if (playerHP > playerMaxHP)
+                {
+                    playerHP = playerMaxHP;
+                    draw.MoveCursor(leftPadding - 2, topPadding);
+                    Console.WriteLine("최대 체력이 한계에 도달했습니다...");
+                }
                 draw.PlayerHP(ref playerHP, ref playerMaxHP);
 
             }
