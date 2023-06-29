@@ -29,6 +29,7 @@ namespace _230626_Crypt_of_necrodancer
         {
             // 기본값
             hunterPositions = new List<Position>();
+            stageturn = 0;
             gameover = false;
             ClearCheck = false;
 
@@ -139,13 +140,31 @@ namespace _230626_Crypt_of_necrodancer
                 }
                 wallCount = 0;
 
+                // 랜덤 하트 생성
+                int randomHeart = random.Next(1, 10);
+
+                if (randomHeart > 5)
+                {
+                    while (true)
+                    {
+                        int HeartHeight = random.Next(2, MAP_SIZE_Y - 1);
+                        int HeartWidth = random.Next(2, MAP_SIZE_X - 1);
+
+                        if (map[HeartHeight][HeartWidth] == FLOOR && HeartWidth != playerPos.x || HeartHeight != playerPos.y)
+                        {
+                            map[HeartHeight][HeartWidth] = HEART;
+                            break;
+                        }
+                    }
+                }
+
                 // 출구 생성
                 while (true)
                 {
                     int PortalHeight = random.Next(3, MAP_SIZE_Y - 2);
                     int PortalWidth = random.Next(3, MAP_SIZE_X - 2);
 
-                    if (map[PortalHeight][PortalWidth] == FLOOR && PortalWidth != playerPos.x || PortalHeight != playerPos.y)
+                    if (map[PortalHeight][PortalWidth] == FLOOR && PortalWidth < playerPos.x - 12 || PortalHeight < playerPos.y - 3 || PortalWidth > playerPos.x + 12 || PortalHeight > playerPos.y + 3)
                     {
                         map[PortalHeight][PortalWidth] = PORTAL;
                         break;
@@ -173,6 +192,10 @@ namespace _230626_Crypt_of_necrodancer
                         else if (map[height][width] == PORTAL)
                         {
                             draw.Portal();
+                        }
+                        else if (map[height][width] == HEART)
+                        {
+                            draw.HeartItem();
                         }
                     }
                     Console.WriteLine();
@@ -216,8 +239,8 @@ namespace _230626_Crypt_of_necrodancer
                     //// 그린 슬라임 생성
                     while (greenSlimeCount < 3)
                     {
-                        int slimeHeight = random.Next(3, MAP_SIZE_Y - 2);
-                        int slimeWidth = random.Next(3, MAP_SIZE_X - 2);
+                        int slimeHeight = random.Next(4, MAP_SIZE_Y - 3);
+                        int slimeWidth = random.Next(4, MAP_SIZE_X - 3);
 
                         if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight - 1][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR)
                         {
@@ -230,10 +253,10 @@ namespace _230626_Crypt_of_necrodancer
                     //// 블루 슬라임 생성
                     while (blueSlimeCount < 3)
                     {
-                        int slimeHeight = random.Next(3, MAP_SIZE_Y - 2);
-                        int slimeWidth = random.Next(3, MAP_SIZE_X - 2);
+                        int slimeHeight = random.Next(4, MAP_SIZE_Y - 3);
+                        int slimeWidth = random.Next(4, MAP_SIZE_X - 3);
 
-                        if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth + 1] == FLOOR && map[slimeHeight][slimeWidth + 1] == FLOOR)
+                        if (map[slimeHeight][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth] == FLOOR && map[slimeHeight - 1][slimeWidth] == FLOOR && map[slimeHeight + 1][slimeWidth + 1] == FLOOR && map[slimeHeight][slimeWidth + 1] == FLOOR && map[slimeHeight][slimeWidth - 1] == FLOOR)
                         {
                             map[slimeHeight][slimeWidth] = ENEMY;
                             blueSlimePositions.Add(new Position(slimeWidth, slimeHeight));
@@ -522,10 +545,11 @@ namespace _230626_Crypt_of_necrodancer
                                 // 재시작
                                 if (key.Key == ConsoleKey.R)
                                 {
-                                    score = 0;
-                                    gold = 0;
-                                    playerHP = 3;
-                                    playerMaxHP = 3;
+                                    hunterPositions = new List<Position>();
+                                    hunterMove = default;
+                                    stageturn = default;
+                                    gameover = false;
+                                    ClearCheck = false;
                                     retry = true;
                                     break;
                                 }
@@ -558,6 +582,7 @@ namespace _230626_Crypt_of_necrodancer
                         Console.Beep(150, 100);
                         draw.MoveCursor(32, 19);
                         Console.WriteLine("MISSED!");
+                        score--;
 
                         //debug
                         if (DEBUG_MODE == true)
@@ -600,9 +625,23 @@ namespace _230626_Crypt_of_necrodancer
 
                     }
 
+                    // 하트 먹으면 회복
+                    if (map[playerPos.y][playerPos.x] == HEART)
+                    {
+                        map[playerPos.y][playerPos.x] = FLOOR;
+                        playerHP += 1;
+                        if (playerHP > playerMaxHP)
+                        {
+                            playerHP = playerMaxHP;
+                        }
+                    }
                     score++;
-                    stageturn++;
-
+                    stageturn++; // 헌터 출현 턴 조정
+                    hunterMove++;
+                    if (score >= highscore)
+                    {
+                        highscore = score;
+                    }
                 }//플레이어, 적 이동 while
 
                 

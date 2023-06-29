@@ -76,19 +76,19 @@ namespace _230626_Crypt_of_necrodancer
             draw.MoveCursor(Box1leftPadding, Box1topPadding); // 박스 위치
             image.Box(Box1leftPadding, Box1topPadding);
 
-            draw.MoveCursor(8, 12);
+            draw.MoveCursor(8,  12);
             Console.WriteLine("[ {0} ]", strings[ShopItemNum], itemInventory[strings[ShopItemNum]]);
-            draw.MoveCursor(12, 13);
+            draw.MoveCursor(8, 13);
             Console.WriteLine("{1} G", strings[ShopItemNum], itemInventory[strings[ShopItemNum]]);
 
-            draw.MoveCursor(24, 12);
+            draw.MoveCursor(26, 12);
             Console.WriteLine("[ {0} ]", strings[ShopItemNum + 1], itemInventory[strings[ShopItemNum + 1]]);
-            draw.MoveCursor(29, 13);
+            draw.MoveCursor(26, 13);
             Console.WriteLine(" {1} G", strings[ShopItemNum + 1], itemInventory[strings[ShopItemNum + 1]]);
 
-            draw.MoveCursor(41, 12);
+            draw.MoveCursor(48, 12);
             Console.WriteLine("[ {0} ]", strings[ShopItemNum + 2], itemInventory[strings[ShopItemNum + 2]]);
-            draw.MoveCursor(45, 13);
+            draw.MoveCursor(48, 13);
             Console.WriteLine("{1} G", strings[ShopItemNum + 2], itemInventory[strings[ShopItemNum + 2]]);
 
 

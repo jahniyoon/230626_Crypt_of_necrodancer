@@ -71,16 +71,16 @@ namespace _230626_Crypt_of_necrodancer
         }
         public void GreenSlime()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("●");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write("◈");
             Console.ResetColor();
 
 
         }
         public void BlueSlime()
         {
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.Write("●");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("◈");
             Console.ResetColor();
 
         }
@@ -242,7 +242,7 @@ namespace _230626_Crypt_of_necrodancer
         }
         public void Portal()
         {
-            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.BackgroundColor = ConsoleColor.Magenta;
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("▣");
             Console.ResetColor();

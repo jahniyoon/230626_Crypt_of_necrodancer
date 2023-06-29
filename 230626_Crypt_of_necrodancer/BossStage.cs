@@ -252,7 +252,7 @@ namespace _230626_Crypt_of_necrodancer
 
                                         if (enemyToRemove != null)
                                         {
-                                            map[playerPos.y][playerPos.x] = Heart;
+                                            map[playerPos.y][playerPos.x] = HEART;
                                             draw.MoveCursor(playerPos.x * 2, playerPos.y);
                                             draw.HeartItem(); // 적을 사망시킨 위치를 바닥으로 변경
                                             playerPos.y++;
@@ -331,7 +331,7 @@ namespace _230626_Crypt_of_necrodancer
                                         }
                                         if (enemyToRemove != null)
                                         {
-                                            map[playerPos.y][playerPos.x] = Heart;
+                                            map[playerPos.y][playerPos.x] = HEART;
                                             draw.MoveCursor(playerPos.x * 2, playerPos.y);
                                             draw.HeartItem(); // 적을 사망시킨 위치를 바닥으로 변경
                                             playerPos.y--;
@@ -408,7 +408,7 @@ namespace _230626_Crypt_of_necrodancer
                                         }
                                         if (enemyToRemove != null)
                                         {
-                                            map[playerPos.y][playerPos.x] = Heart;
+                                            map[playerPos.y][playerPos.x] = HEART;
                                             draw.MoveCursor(playerPos.x * 2, playerPos.y);
                                             draw.HeartItem(); // 적을 사망시킨 위치를 바닥으로 변경
                                             playerPos.x++;
@@ -486,7 +486,7 @@ namespace _230626_Crypt_of_necrodancer
 
                                         if (enemyToRemove != null)
                                         {
-                                            map[playerPos.y][playerPos.x] = Heart;
+                                            map[playerPos.y][playerPos.x] = HEART;
                                             draw.MoveCursor(playerPos.x * 2, playerPos.y);
                                             draw.HeartItem(); // 적을 사망시킨 위치를 바닥으로 변경
                                             playerPos.x--;
@@ -559,7 +559,7 @@ namespace _230626_Crypt_of_necrodancer
                     }
 
                     // 하트 먹으면 회복
-                    if (map[playerPos.y][playerPos.x] == Heart)
+                    if (map[playerPos.y][playerPos.x] == HEART)
                     {
                         map[playerPos.y][playerPos.x] = FLOOR;
                         playerHP += 1;

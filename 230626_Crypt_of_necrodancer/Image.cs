@@ -24,15 +24,15 @@ namespace _230626_Crypt_of_necrodancer
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.WriteLine("■■■■■■     ■■■■■■     ■■■■■■");
+            Console.WriteLine("■■■■■■        ■■■■■■        ■■■■■■");
             draw.MoveCursor(x, y + 1);
-            Console.WriteLine("■        ■     ■        ■     ■        ■");
+            Console.WriteLine("■        ■        ■        ■        ■        ■");
             draw.MoveCursor(x, y + 2);
-            Console.WriteLine("■   ①   ■     ■   ②   ■     ■   ③   ■");
+            Console.WriteLine("■   ①   ■        ■   ②   ■        ■   ③   ■");
             draw.MoveCursor(x, y + 3);
-            Console.WriteLine("■        ■     ■        ■     ■        ■");
+            Console.WriteLine("■        ■        ■        ■        ■        ■");
             draw.MoveCursor(x, y + 4);
-            Console.WriteLine("■■■■■■     ■■■■■■     ■■■■■■");
+            Console.WriteLine("■■■■■■        ■■■■■■        ■■■■■■");
             Console.ResetColor();
 
         }

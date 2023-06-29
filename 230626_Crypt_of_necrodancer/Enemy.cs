@@ -198,23 +198,28 @@ namespace _230626_Crypt_of_necrodancer
 
                 else if (greenSlimeMove == 1)    
                 {
-                    greenSlimeMove++;
-                    map[enemyY][enemyX] = FLOOR;
-                    map[enemyY+1][enemyX] = ENEMY;
-                    draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                    draw.Floor();
-                    enemyPos.y++;
-                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                    if (map[enemyY + 1][enemyX] == FLOOR)
                     {
+                        greenSlimeMove++;
                         map[enemyY][enemyX] = FLOOR;
-                        map[enemyY - 1][enemyX] = ENEMY;
+                        map[enemyY + 1][enemyX] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                        draw.PlayerHurt();
-                        playerHP -= 1;
-                        enemyPos.y--;
-                        greenSlimeMove = 0;
+                        draw.Floor();
+                        enemyPos.y++;
+                        if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                        {
+                            map[enemyY][enemyX] = FLOOR;
+                            map[enemyY - 1][enemyX] = ENEMY;
+                            draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+                            draw.PlayerHurt();
+                            playerHP -= 1;
+                            enemyPos.y--;
+                            greenSlimeMove = 0;
+                        }
                     }
-                    
+                    else
+                    greenSlimeMove = 0;
+
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.GreenSlime();
 
@@ -227,23 +232,28 @@ namespace _230626_Crypt_of_necrodancer
                 }
                 else if (greenSlimeMove == 3)  
                 {
-                    greenSlimeMove=0;
-                    map[enemyY][enemyX] = FLOOR;
-                    map[enemyY - 1][enemyX] = ENEMY;
-                    draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                    draw.Floor();
-                    enemyPos.y--;
-                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                    if (map[enemyY - 1][enemyX] == FLOOR)
                     {
+                        greenSlimeMove = 0;
                         map[enemyY][enemyX] = FLOOR;
-                        map[enemyY + 1][enemyX] = ENEMY;
+                        map[enemyY - 1][enemyX] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                        draw.PlayerHurt();
-                        playerHP -= 1;
-                        enemyPos.y++;
-                        greenSlimeMove = 2;
+                        draw.Floor();
+                        enemyPos.y--;
+                        if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                        {
+                            map[enemyY][enemyX] = FLOOR;
+                            map[enemyY + 1][enemyX] = ENEMY;
+                            draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+                            draw.PlayerHurt();
+                            playerHP -= 1;
+                            enemyPos.y++;
+                            greenSlimeMove = 2;
+                        }
                     }
-                    
+                    else
+                    greenSlimeMove = 2;
+
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.GreenSlime();
 
@@ -271,24 +281,29 @@ namespace _230626_Crypt_of_necrodancer
 
                 else if (blueSlimeMove == 1)
                 {
-                    blueSlimeMove = 2;
-
-                    map[enemyY][enemyX] = FLOOR;
-                    map[enemyY + 1][enemyX] = ENEMY;
-                    draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                    draw.Floor();
-                    enemyPos.y++;
-                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                    if (map[enemyY + 1][enemyX] == FLOOR)
                     {
-                        blueSlimeMove = 0;
+                        blueSlimeMove = 2;
+
                         map[enemyY][enemyX] = FLOOR;
-                        map[enemyY - 1][enemyX] = ENEMY;
+                        map[enemyY + 1][enemyX] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                        draw.PlayerHurt();
-                        playerHP -= 1;
-                        enemyPos.y--;
+                        draw.Floor();
+                        enemyPos.y++;
+                        if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                        {
+                            blueSlimeMove = 0;
+                            map[enemyY][enemyX] = FLOOR;
+                            map[enemyY - 1][enemyX] = ENEMY;
+                            draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+                            draw.PlayerHurt();
+                            playerHP -= 1;
+                            enemyPos.y--;
+                        }
                     }
-                    
+                    else
+                    blueSlimeMove = 0;
+
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
                 }
@@ -301,24 +316,29 @@ namespace _230626_Crypt_of_necrodancer
                 }
                 else if (blueSlimeMove == 3)
                 {
-                    blueSlimeMove = 4;
-
-                    map[enemyY][enemyX] = FLOOR;
-                    map[enemyY][enemyX + 1] = ENEMY;
-                    draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                    draw.Floor();
-                    enemyPos.x++;
-                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                    if (map[enemyY][enemyX + 1] == FLOOR)
                     {
-                        blueSlimeMove = 2;
+                        blueSlimeMove = 4;
+
                         map[enemyY][enemyX] = FLOOR;
-                        map[enemyY][enemyX - 1] = ENEMY;
+                        map[enemyY][enemyX + 1] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                        draw.PlayerHurt();
-                        playerHP -= 1;
-                        enemyPos.x--;
+                        draw.Floor();
+                        enemyPos.x++;
+                        if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                        {
+                            blueSlimeMove = 2;
+                            map[enemyY][enemyX] = FLOOR;
+                            map[enemyY][enemyX - 1] = ENEMY;
+                            draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+                            draw.PlayerHurt();
+                            playerHP -= 1;
+                            enemyPos.x--;
+                        }
                     }
-                                       
+                    else
+                    blueSlimeMove = 2;
+
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
                 }
@@ -330,23 +350,28 @@ namespace _230626_Crypt_of_necrodancer
                 }
                 else if (blueSlimeMove == 5)
                 {
-                    blueSlimeMove = 6;
-
-                    map[enemyY][enemyX] = FLOOR;
-                    map[enemyY - 1][enemyX] = ENEMY;
-                    draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                    draw.Floor();
-                    enemyPos.y--;
-                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                    if (map[enemyY - 1][enemyX] == FLOOR)
                     {
-                        blueSlimeMove = 4;
+                        blueSlimeMove = 6;
+
                         map[enemyY][enemyX] = FLOOR;
-                        map[enemyY + 1][enemyX] = ENEMY;
+                        map[enemyY - 1][enemyX] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                        draw.PlayerHurt();
-                        playerHP -= 1; 
-                        enemyPos.y++;
+                        draw.Floor();
+                        enemyPos.y--;
+                        if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                        {
+                            blueSlimeMove = 4;
+                            map[enemyY][enemyX] = FLOOR;
+                            map[enemyY + 1][enemyX] = ENEMY;
+                            draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+                            draw.PlayerHurt();
+                            playerHP -= 1;
+                            enemyPos.y++;
+                        }
                     }
+                    else
+                    blueSlimeMove = 4;
 
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
@@ -359,24 +384,29 @@ namespace _230626_Crypt_of_necrodancer
                 }
                 else if (blueSlimeMove == 7)
                 {
-                    blueSlimeMove=0;
-
-                    map[enemyY][enemyX] = FLOOR;
-                    map[enemyY][enemyX - 1] = ENEMY;
-                    draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                    draw.Floor();
-                    enemyPos.x--;
-                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                    if (map[enemyY][enemyX - 1] == FLOOR)
                     {
-                        blueSlimeMove = 6;
+                        blueSlimeMove = 0;
 
                         map[enemyY][enemyX] = FLOOR;
-                        map[enemyY][enemyX + 1] = ENEMY;
+                        map[enemyY][enemyX - 1] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                        draw.PlayerHurt();
-                        playerHP -= 1; 
-                        enemyPos.x++;
+                        draw.Floor();
+                        enemyPos.x--;
+                        if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                        {
+                            blueSlimeMove = 6;
+
+                            map[enemyY][enemyX] = FLOOR;
+                            map[enemyY][enemyX + 1] = ENEMY;
+                            draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+                            draw.PlayerHurt();
+                            playerHP -= 1;
+                            enemyPos.x++;
+                        }
                     }
+                    else
+                    blueSlimeMove = 6;
 
 
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);

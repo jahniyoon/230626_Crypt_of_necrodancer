@@ -26,7 +26,7 @@ namespace _230626_Crypt_of_necrodancer
         protected const int WALL = 1;
         protected const int PORTAL = 2;
         protected const int GOLD = 3;
-        protected const int Heart = 4;
+        protected const int HEART = 4;
         protected const int PLAYER = 999;
         protected const int ENEMY = 10;
         protected const int BOSS = 99;
