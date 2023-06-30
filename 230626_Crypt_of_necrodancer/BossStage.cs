@@ -25,6 +25,27 @@ namespace _230626_Crypt_of_necrodancer
 
         public void Run(ref int playerHP, ref int playerMaxHP, ref int playerAttack, ref int gold, ref int score )
         {
+            // 가이드 UI
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            draw.MoveCursor(0, 25);
+            image.GuideBox();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            draw.MoveCursor(2, 26);
+            Console.Write("●");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" : Player");
+            draw.MoveCursor(16, 26);
+            Console.Write("◈ : Enemy");
+            draw.MoveCursor(30, 26);
+            draw.Portal();
+            Console.Write(" : Next Stage");
+            draw.MoveCursor(48, 26);
+            draw.Gold();
+            Console.Write(" : Gold");
+            draw.MoveCursor(60, 26);
+            draw.HeartItem();
+            Console.Write(" : HP+");
+            Console.ResetColor();
 
             bossHP = 30;
             gameover = false;
@@ -178,14 +199,14 @@ namespace _230626_Crypt_of_necrodancer
                     stopwatch.Start();
                     bool inputSuccess = false;
 
-                    rhythmBar.Bar(0, 20);
+                    rhythmBar.Bar(0, 21);
                     Console.Beep(300, 100);
 
                     //입력대기
                     while (true)
                     {
-                        draw.MoveCursor(32, 19);
-                        Console.WriteLine("       ");
+                        draw.MoveCursor(28, 19);
+                        Console.WriteLine("             ");
                         // 버리는 타이밍 
                         if (stopwatch.ElapsedMilliseconds >= HEART_TIMING + 25)
                         {
@@ -529,6 +550,16 @@ namespace _230626_Crypt_of_necrodancer
                                 }
                                 //debug
 
+                                combo++;
+                                if (combo >= 10)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                }
+
+                                draw.MoveCursor(31, 19);
+                                Console.WriteLine("COMBO {0}", combo);
+                                Console.ResetColor();
+
                                 inputSuccess = true;
                                 break;
                             }
@@ -543,8 +574,11 @@ namespace _230626_Crypt_of_necrodancer
                         draw.MoveCursor(playerPos.x * 2, playerPos.y);
                         draw.Player_Stop();
                         Console.Beep(150, 100);
+
                         draw.MoveCursor(32, 19);
                         Console.WriteLine("MISSED!");
+                        score--;
+                        combo = 0;
 
                         //debug
                         if (DEBUG_MODE == true)
@@ -587,7 +621,7 @@ namespace _230626_Crypt_of_necrodancer
 
                     draw.MoveCursor(playerPos.x * 2, playerPos.y);
                     draw.PlayerDead();
-                    draw.DeadHeart(30, 20);
+                    draw.DeadHeart(30, 21);
                     Thread.Sleep(1000);
 
                     draw.MoveCursor(26, 5);

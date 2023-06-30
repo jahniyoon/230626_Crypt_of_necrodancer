@@ -40,6 +40,8 @@ namespace _230626_Crypt_of_necrodancer
         protected int playerAttack = 1;
         protected int playerDamage = 1;
 
+        protected int combo = 0;
+
         protected int stage = 1;
         protected int stageturn = 0;
         protected int score = 0;

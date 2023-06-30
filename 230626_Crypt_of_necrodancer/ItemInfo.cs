@@ -22,7 +22,7 @@ namespace _230626_Crypt_of_necrodancer
                 draw.MoveCursor(leftPadding - 2, topPadding + 1);
                 Console.WriteLine("                                                      ");
 
-                int randomNum = random.Next(1, 3);
+                int randomNum = random.Next(2, 4);
                 stage += randomNum;
 
                 if (stage > 10)

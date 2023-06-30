@@ -197,7 +197,7 @@ namespace _230626_Crypt_of_necrodancer
 
                 else if (greenSlimeMove == 1)    
                 {
-                    if (map[enemyY + 1][enemyX] != WALL|| map[enemyY + 1][enemyX] != ENEMY|| map[enemyY + 1][enemyX] != PORTAL)
+                    if (map[enemyY + 1][enemyX] != WALL&& map[enemyY + 1][enemyX] != ENEMY|| map[enemyY + 1][enemyX] != PORTAL)
                     {
                         map[enemyY][enemyX] = FLOOR;
                         map[enemyY + 1][enemyX] = ENEMY;
@@ -225,7 +225,7 @@ namespace _230626_Crypt_of_necrodancer
                 }
                 else if (greenSlimeMove == 3)  
                 {
-                    if (map[enemyY - 1][enemyX] != WALL || map[enemyY - 1][enemyX] != ENEMY || map[enemyY - 1][enemyX] != PORTAL)
+                    if (map[enemyY - 1][enemyX] != WALL && map[enemyY - 1][enemyX] != ENEMY || map[enemyY - 1][enemyX] != PORTAL)
                     {
                         map[enemyY][enemyX] = FLOOR;
                         map[enemyY - 1][enemyX] = ENEMY;

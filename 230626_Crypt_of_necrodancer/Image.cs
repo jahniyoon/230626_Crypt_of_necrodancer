@@ -20,6 +20,57 @@ namespace _230626_Crypt_of_necrodancer
             Console.WriteLine("│                                                                    │");
             Console.WriteLine("└────────────────────────────────────────────────────────────────────┘");
         }
+        public void GuideBox()
+        {
+            Console.WriteLine("┌────────────────────────────────────────────────────────────────────┐");
+            Console.WriteLine("│                                                                    │");
+            Console.WriteLine("└────────────────────────────────────────────────────────────────────┘");
+        }
+
+        public void InfoBox(int x, int y)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            draw.MoveCursor(x, y);
+            Console.WriteLine("┌─────────────────┐");
+            draw.MoveCursor(x, y+1);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y+2);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y+3);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y+4);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y+5);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y+6);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y + 7);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y + 8);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y + 9);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y + 10);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y + 11);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y + 12);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y + 13);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y + 14);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y + 15);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y + 16);
+            Console.WriteLine("│                 │");
+            draw.MoveCursor(x, y+ + 17);
+            Console.WriteLine("└─────────────────┘");
+            Console.ResetColor();
+
+
+
+        }
         public void Box(int x, int y)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;

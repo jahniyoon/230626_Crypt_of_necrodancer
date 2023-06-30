@@ -55,9 +55,37 @@ namespace _230626_Crypt_of_necrodancer
             blueSlimeMove = default;
             blueSlimeCount = default;
 
+           
+
+
+
             while (gameover == false) // 게임오버시 탈출
             {
+                // 가이드 UI
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                draw.MoveCursor(0, 25);
+                image.GuideBox();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                draw.MoveCursor(2, 26);
+                Console.Write("●");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(" : Player");
+                draw.MoveCursor(16, 26);
+                Console.Write("◈ : Enemy");
+                draw.MoveCursor(30, 26);
+                draw.Portal();
+                Console.Write(" : Next Stage");
+                draw.MoveCursor(48, 26);
+                draw.Gold();
+                Console.Write(" : Gold");
+                draw.MoveCursor(60, 26);
+                draw.HeartItem();
+                Console.Write(" : HP+");
+                Console.ResetColor();
+
                 retry = false;
+                combo = 0;
+
 
                 // 보스스테이지 체크
                 if (stage >= BOSS_STAGE)
@@ -71,7 +99,6 @@ namespace _230626_Crypt_of_necrodancer
                 draw.MoveCursor(64, 19);
                 Console.Write("Stage{00}", stage);
                 Console.ResetColor();
-
 
                 // 맵 생성
                 draw.MoveCursor(0, 0);
@@ -302,14 +329,14 @@ namespace _230626_Crypt_of_necrodancer
                     stopwatch.Start();
                     bool inputSuccess = false;
 
-                    rhythmBar.Bar(0, 20);
+                    rhythmBar.Bar(0, 21);
                     Console.Beep(300, 100);
 
                     //입력대기
                     while (true)
                     {
-                        draw.MoveCursor(32, 19);
-                        Console.WriteLine("       ");
+                        draw.MoveCursor(28, 19);
+                        Console.WriteLine("             ");
                         // 버리는 타이밍 
                         if (stopwatch.ElapsedMilliseconds >= HEART_TIMING + 25)
                         {
@@ -592,6 +619,16 @@ namespace _230626_Crypt_of_necrodancer
                                 }
                                 //debug
 
+                                combo++;
+                                if (combo >= 10)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                }
+
+                                draw.MoveCursor(31, 19);
+                                Console.WriteLine("COMBO {0}",combo);
+                                Console.ResetColor();
+
                                 inputSuccess = true;
                                 break;
                             }
@@ -605,10 +642,11 @@ namespace _230626_Crypt_of_necrodancer
                         draw.MoveCursor(playerPos.x * 2, playerPos.y);
                         draw.Player_Stop();
                         Console.Beep(150, 100);
+                        
                         draw.MoveCursor(32, 19);
                         Console.WriteLine("MISSED!");
                         score--;
-
+                        combo = 0;
                         //debug
                         if (DEBUG_MODE == true)
                         {
@@ -641,6 +679,10 @@ namespace _230626_Crypt_of_necrodancer
                     {
                         map[playerPos.y][playerPos.x] = FLOOR;
                         gold += 100;
+                        if (combo > 10)
+                        {
+                            gold += 100;
+                        }
 
                     }
 
@@ -691,7 +733,7 @@ namespace _230626_Crypt_of_necrodancer
 
                     draw.MoveCursor(playerPos.x * 2, playerPos.y);
                     draw.PlayerDead();
-                    draw.DeadHeart(30, 20);
+                    draw.DeadHeart(30, 21);
                     Thread.Sleep(1000);
 
                     draw.MoveCursor(26, 5);
@@ -782,9 +824,9 @@ namespace _230626_Crypt_of_necrodancer
 
             draw.MoveCursor(3, 16);
             Console.Write(" 노름꾼은 자기 심장을 잠재울 악마");
-            draw.MoveCursor(38, 16);
+            draw.MoveCursor(36, 16);
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.Write("Heart Breaker");
+            Console.Write("  Heart Breaker");
             Console.ResetColor();
 
             draw.MoveCursor(51, 16);

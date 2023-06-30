@@ -343,7 +343,7 @@ namespace _230626_Crypt_of_necrodancer
 
                         buyItem = strings[ShopItemNum + 2];
 
-                        Console.WriteLine("'{0}' 아이템을 구매하기로했습니다.", strings[ShopItemNum + 1]);
+                        Console.WriteLine("'{0}' 아이템을 구매하기로했습니다.", strings[ShopItemNum + 2]);
                         Thread.Sleep(800);
                         draw.MoveCursor(0, 19);
                         image.TextBox();
