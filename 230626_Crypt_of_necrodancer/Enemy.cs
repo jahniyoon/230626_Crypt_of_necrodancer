@@ -131,7 +131,7 @@ namespace _230626_Crypt_of_necrodancer
                         {
                             draw.MoveCursor(playerPos.x * 2, playerPos.y);
                             draw.BossAttack();
-                            playerHP -= 3;
+                            playerHP -= 2;
                             bossAttack = 1;
 
                         }
@@ -179,7 +179,7 @@ namespace _230626_Crypt_of_necrodancer
 
 
         // 상하 움직이는 그린슬라임
-        public void GreenSlimeMove(ref int[][] map, ref Position playerPos, ref List<Position> enemyPositions, ref int playerHP)
+        public void GreenSlimeMove(ref int[][] map, ref Position playerPos, ref List<Position> enemyPositions, ref int playerHP, int greenSlimeMove)
         {
             Draw draw = new Draw();
             for (int i = 0; i < enemyPositions.Count; i++)
@@ -193,14 +193,12 @@ namespace _230626_Crypt_of_necrodancer
                 {
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.GreenSlime();
-                    greenSlimeMove++;
                 }
 
                 else if (greenSlimeMove == 1)    
                 {
-                    if (map[enemyY + 1][enemyX] == FLOOR)
+                    if (map[enemyY + 1][enemyX] != WALL|| map[enemyY + 1][enemyX] != ENEMY|| map[enemyY + 1][enemyX] != PORTAL)
                     {
-                        greenSlimeMove++;
                         map[enemyY][enemyX] = FLOOR;
                         map[enemyY + 1][enemyX] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
@@ -214,12 +212,8 @@ namespace _230626_Crypt_of_necrodancer
                             draw.PlayerHurt();
                             playerHP -= 1;
                             enemyPos.y--;
-                            greenSlimeMove = 0;
                         }
                     }
-                    else
-                    greenSlimeMove = 0;
-
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.GreenSlime();
 
@@ -228,13 +222,11 @@ namespace _230626_Crypt_of_necrodancer
                 {
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.GreenSlime();
-                    greenSlimeMove++;
                 }
                 else if (greenSlimeMove == 3)  
                 {
-                    if (map[enemyY - 1][enemyX] == FLOOR)
+                    if (map[enemyY - 1][enemyX] != WALL || map[enemyY - 1][enemyX] != ENEMY || map[enemyY - 1][enemyX] != PORTAL)
                     {
-                        greenSlimeMove = 0;
                         map[enemyY][enemyX] = FLOOR;
                         map[enemyY - 1][enemyX] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
@@ -248,12 +240,8 @@ namespace _230626_Crypt_of_necrodancer
                             draw.PlayerHurt();
                             playerHP -= 1;
                             enemyPos.y++;
-                            greenSlimeMove = 2;
                         }
                     }
-                    else
-                    greenSlimeMove = 2;
-
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.GreenSlime();
 
@@ -262,7 +250,7 @@ namespace _230626_Crypt_of_necrodancer
             }
         }
         //상하좌우 움직이는 블루슬라임
-        public void BlueSlimeMove(ref int[][] map, ref Position playerPos, ref List<Position> enemyPositions, ref int playerHP)
+        public void BlueSlimeMove(ref int[][] map, ref Position playerPos, ref List<Position> enemyPositions, ref int playerHP, int blueSlimeMove)
         {
             Draw draw = new Draw();
             for (int i = 0; i < enemyPositions.Count; i++)
@@ -276,14 +264,12 @@ namespace _230626_Crypt_of_necrodancer
                 {
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
-                    blueSlimeMove++;
                 }
 
                 else if (blueSlimeMove == 1)
                 {
                     if (map[enemyY + 1][enemyX] == FLOOR)
                     {
-                        blueSlimeMove = 2;
 
                         map[enemyY][enemyX] = FLOOR;
                         map[enemyY + 1][enemyX] = ENEMY;
@@ -292,7 +278,6 @@ namespace _230626_Crypt_of_necrodancer
                         enemyPos.y++;
                         if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
                         {
-                            blueSlimeMove = 0;
                             map[enemyY][enemyX] = FLOOR;
                             map[enemyY - 1][enemyX] = ENEMY;
                             draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
@@ -301,9 +286,6 @@ namespace _230626_Crypt_of_necrodancer
                             enemyPos.y--;
                         }
                     }
-                    else
-                    blueSlimeMove = 0;
-
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
                 }
@@ -312,13 +294,11 @@ namespace _230626_Crypt_of_necrodancer
                 {
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
-                    blueSlimeMove++;
                 }
                 else if (blueSlimeMove == 3)
                 {
                     if (map[enemyY][enemyX + 1] == FLOOR)
                     {
-                        blueSlimeMove = 4;
 
                         map[enemyY][enemyX] = FLOOR;
                         map[enemyY][enemyX + 1] = ENEMY;
@@ -327,7 +307,6 @@ namespace _230626_Crypt_of_necrodancer
                         enemyPos.x++;
                         if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
                         {
-                            blueSlimeMove = 2;
                             map[enemyY][enemyX] = FLOOR;
                             map[enemyY][enemyX - 1] = ENEMY;
                             draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
@@ -336,8 +315,6 @@ namespace _230626_Crypt_of_necrodancer
                             enemyPos.x--;
                         }
                     }
-                    else
-                    blueSlimeMove = 2;
 
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
@@ -346,14 +323,11 @@ namespace _230626_Crypt_of_necrodancer
                 {
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
-                    blueSlimeMove++;
                 }
                 else if (blueSlimeMove == 5)
                 {
                     if (map[enemyY - 1][enemyX] == FLOOR)
                     {
-                        blueSlimeMove = 6;
-
                         map[enemyY][enemyX] = FLOOR;
                         map[enemyY - 1][enemyX] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
@@ -361,7 +335,6 @@ namespace _230626_Crypt_of_necrodancer
                         enemyPos.y--;
                         if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
                         {
-                            blueSlimeMove = 4;
                             map[enemyY][enemyX] = FLOOR;
                             map[enemyY + 1][enemyX] = ENEMY;
                             draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
@@ -370,9 +343,6 @@ namespace _230626_Crypt_of_necrodancer
                             enemyPos.y++;
                         }
                     }
-                    else
-                    blueSlimeMove = 4;
-
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
                 }
@@ -380,14 +350,11 @@ namespace _230626_Crypt_of_necrodancer
                 {
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
-                    blueSlimeMove++;
                 }
                 else if (blueSlimeMove == 7)
                 {
                     if (map[enemyY][enemyX - 1] == FLOOR)
                     {
-                        blueSlimeMove = 0;
-
                         map[enemyY][enemyX] = FLOOR;
                         map[enemyY][enemyX - 1] = ENEMY;
                         draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
@@ -395,8 +362,6 @@ namespace _230626_Crypt_of_necrodancer
                         enemyPos.x--;
                         if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
                         {
-                            blueSlimeMove = 6;
-
                             map[enemyY][enemyX] = FLOOR;
                             map[enemyY][enemyX + 1] = ENEMY;
                             draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
@@ -405,9 +370,6 @@ namespace _230626_Crypt_of_necrodancer
                             enemyPos.x++;
                         }
                     }
-                    else
-                    blueSlimeMove = 6;
-
 
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.BlueSlime();
@@ -417,8 +379,6 @@ namespace _230626_Crypt_of_necrodancer
             }
                 
         }
-
-        // 플레이어를 쫓는 헌터
         public void HunterMove(ref int[][] map, ref Position playerPos, ref List<Position> enemyPositions, ref int playerHP)
         {
             Draw draw = new Draw();
@@ -431,83 +391,89 @@ namespace _230626_Crypt_of_necrodancer
                 int enemyY = enemyPos.y;
 
                 // 적 이동 로직 (플레이어를 추적)
-                 if (enemyY < playerPos.y && map[enemyY + 1][enemyX] == FLOOR)
+                if (enemyY < playerPos.y && map[enemyY + 1][enemyX] == FLOOR || map[enemyY + 1][enemyX] == GOLD || map[enemyY + 1][enemyX] == HEART)
                 {
-                    map[enemyY][enemyX] = FLOOR;
-                    map[enemyY + 1][enemyX] = ENEMY;
-                    draw.MoveCursor(enemyX * 2, enemyY);
-                    draw.Floor();
-                    enemyPos.y++;
-                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y + 1)
                     {
-                        map[enemyY][enemyX] = FLOOR;
-                        map[enemyY - 1][enemyX] = ENEMY;
-                        draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
                         draw.PlayerHurt();
                         playerHP -= 1;
-                        enemyPos.y--;
                     }
-                    draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                    draw.Hunter();
-                }
-                else if (enemyY > playerPos.y && map[enemyY - 1][enemyX] == FLOOR)
-                {
-                    map[enemyY][enemyX] = FLOOR;
-                    map[enemyY - 1][enemyX] = ENEMY;
-                    draw.MoveCursor(enemyX * 2, enemyY);
-                    draw.Floor();
-                    enemyPos.y--;
-                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+
+                    else
                     {
                         map[enemyY][enemyX] = FLOOR;
                         map[enemyY + 1][enemyX] = ENEMY;
-                        draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                        draw.PlayerHurt();
-                        playerHP -= 1;
+                        draw.MoveCursor(enemyX * 2, enemyY);
+                        draw.Floor();
                         enemyPos.y++;
                     }
+
+                    draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+                    draw.Hunter();
+                }
+                else if (enemyY > playerPos.y && map[enemyY - 1][enemyX] == FLOOR || map[enemyY - 1][enemyX] == GOLD || map[enemyY - 1][enemyX] == HEART)
+                {
+                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y - 1)
+                    {
+                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                        draw.PlayerHurt();
+                        playerHP -= 1;
+                    }
+
+                    else
+                    {
+                        map[enemyY][enemyX] = FLOOR;
+                        map[enemyY - 1][enemyX] = ENEMY;
+                        draw.MoveCursor(enemyX * 2, enemyY);
+                        draw.Floor();
+                        enemyPos.y--;
+                    }
+                    
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.Hunter();
 
                 }
 
-                else if (enemyX < playerPos.x && map[enemyY][enemyX + 1] == FLOOR)
+                else if (enemyX < playerPos.x && map[enemyY][enemyX + 1] == FLOOR || map[enemyY][enemyX + 1] == GOLD || map[enemyY][enemyX + 1] == HEART)
                 {
-                    map[enemyY][enemyX] = FLOOR;
-                    map[enemyY][enemyX + 1] = ENEMY;
-                    draw.MoveCursor(enemyX * 2, enemyY);
-                    draw.Floor();
-                    enemyPos.x++;
-
-                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+                    if (playerPos.x == enemyPos.x + 1 && playerPos.y == enemyPos.y)
                     {
-                        map[enemyY][enemyX] = FLOOR;
-                        map[enemyY][enemyX - 1] = ENEMY;
-                        draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
                         draw.PlayerHurt();
                         playerHP -= 1;
-                        enemyPos.x--;
+                    }
+
+                    else
+                    {
+                        map[enemyY][enemyX] = FLOOR;
+                        map[enemyY][enemyX + 1] = ENEMY;
+                        draw.MoveCursor(enemyX * 2, enemyY);
+                        draw.Floor();
+                        enemyPos.x++;
                     }
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.Hunter();
 
                 }
-                else if (enemyX > playerPos.x && map[enemyY][enemyX - 1] == FLOOR)
+                else if (enemyX > playerPos.x && map[enemyY][enemyX - 1] == FLOOR || map[enemyY][enemyX - 1] == GOLD || map[enemyY][enemyX - 1] == HEART)
                 {
+                    if (playerPos.x == enemyPos.x - 1 && playerPos.y == enemyPos.y)
+                    {
+                        draw.MoveCursor(playerPos.x * 2, playerPos.y);
+                        draw.PlayerHurt();
+                        playerHP -= 1;
+                    }
+                    else
+                    {
                     map[enemyY][enemyX] = FLOOR;
                     map[enemyY][enemyX - 1] = ENEMY;
                     draw.MoveCursor(enemyX * 2, enemyY);
                     draw.Floor();
                     enemyPos.x--;
-                    if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
-                    {
-                        map[enemyY][enemyX] = FLOOR;
-                        map[enemyY][enemyX + 1] = ENEMY;
-                        draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
-                        draw.PlayerHurt();
-                        playerHP -= 1;
-                        enemyPos.x++;
                     }
+
+
                     draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
                     draw.Hunter();
 
@@ -515,5 +481,105 @@ namespace _230626_Crypt_of_necrodancer
             }
 
         }
+
+        //// 플레이어를 쫓는 헌터
+        //public void HunterMove(ref int[][] map, ref Position playerPos, ref List<Position> enemyPositions, ref int playerHP)
+        //{
+        //    Draw draw = new Draw();
+
+        //    for (int i = 0; i < enemyPositions.Count; i++)
+        //    {
+        //        Position enemyPos = enemyPositions[i];
+
+        //        int enemyX = enemyPos.x;
+        //        int enemyY = enemyPos.y;
+
+        //        // 적 이동 로직 (플레이어를 추적)
+        //         if (enemyY < playerPos.y && map[enemyY + 1][enemyX] == FLOOR)
+        //        {
+
+        //            map[enemyY][enemyX] = FLOOR;
+        //            map[enemyY + 1][enemyX] = ENEMY;
+        //            draw.MoveCursor(enemyX * 2, enemyY);
+        //            draw.Floor();
+        //            enemyPos.y++;
+        //            if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+        //            {
+        //                map[enemyY][enemyX] = FLOOR;
+        //                map[enemyY - 1][enemyX] = ENEMY;
+        //                draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+        //                draw.PlayerHurt();
+        //                playerHP -= 1;
+        //                enemyPos.y--;
+        //            }
+        //            draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+        //            draw.Hunter();
+        //        }
+        //        else if (enemyY > playerPos.y && map[enemyY - 1][enemyX] == FLOOR)
+        //        {
+        //            map[enemyY][enemyX] = FLOOR;
+        //            map[enemyY - 1][enemyX] = ENEMY;
+        //            draw.MoveCursor(enemyX * 2, enemyY);
+        //            draw.Floor();
+        //            enemyPos.y--;
+        //            if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+        //            {
+        //                map[enemyY][enemyX] = FLOOR;
+        //                map[enemyY + 1][enemyX] = ENEMY;
+        //                draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+        //                draw.PlayerHurt();
+        //                playerHP -= 1;
+        //                enemyPos.y++;
+        //            }
+        //            draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+        //            draw.Hunter();
+
+        //        }
+
+        //        else if (enemyX < playerPos.x && map[enemyY][enemyX + 1] == FLOOR)
+        //        {
+        //            map[enemyY][enemyX] = FLOOR;
+        //            map[enemyY][enemyX + 1] = ENEMY;
+        //            draw.MoveCursor(enemyX * 2, enemyY);
+        //            draw.Floor();
+        //            enemyPos.x++;
+
+        //            if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+        //            {
+        //                map[enemyY][enemyX] = FLOOR;
+        //                map[enemyY][enemyX - 1] = ENEMY;
+        //                draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+        //                draw.PlayerHurt();
+        //                playerHP -= 1;
+        //                enemyPos.x--;
+        //            }
+        //            draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+        //            draw.Hunter();
+
+        //        }
+        //        else if (enemyX > playerPos.x && map[enemyY][enemyX - 1] == FLOOR)
+        //        {
+        //            map[enemyY][enemyX] = FLOOR;
+        //            map[enemyY][enemyX - 1] = ENEMY;
+        //            draw.MoveCursor(enemyX * 2, enemyY);
+        //            draw.Floor();
+        //            enemyPos.x--;
+        //            if (playerPos.x == enemyPos.x && playerPos.y == enemyPos.y)
+        //            {
+        //                map[enemyY][enemyX] = FLOOR;
+        //                map[enemyY][enemyX + 1] = ENEMY;
+        //                draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+        //                draw.PlayerHurt();
+        //                playerHP -= 1;
+        //                enemyPos.x++;
+        //            }
+        //            draw.MoveCursor(enemyPos.x * 2, enemyPos.y);
+        //            draw.Hunter();
+
+        //        }
+        //    }
+
+        //}
+
     }
 }

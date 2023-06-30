@@ -181,8 +181,8 @@ namespace _230626_Crypt_of_necrodancer
                     }
 
                     // Slime 출력
-                    enemy.GreenSlimeMove(ref map, ref playerPos, ref greenSlimePositions, ref playerHP);
-                    enemy.BlueSlimeMove(ref map, ref playerPos, ref blueSlimePositions, ref playerHP);
+                    enemy.GreenSlimeMove(ref map, ref playerPos, ref greenSlimePositions, ref playerHP, greenSlimeMove);
+                    enemy.BlueSlimeMove(ref map, ref playerPos, ref blueSlimePositions, ref playerHP, blueSlimeMove);
                     enemy.Boss(ref map, ref playerPos, ref BossPos, ref playerHP, ref bossHP);
 
                     draw.PlayerHP(ref playerHP, ref playerMaxHP);

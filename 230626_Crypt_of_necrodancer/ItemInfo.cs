@@ -32,7 +32,7 @@ namespace _230626_Crypt_of_necrodancer
 
                 draw.MoveCursor(leftPadding - 2, topPadding);
                 Console.WriteLine("낡은 지도에는 지름길이 표시되어 있었습니다.");
-                draw.MoveCursor(leftPadding - 2, topPadding);
+                draw.MoveCursor(leftPadding - 2, topPadding + 1);
                 Console.WriteLine("{0} 스테이지로 이동합니다.", stage);
 
                 draw.PlayerHP(ref playerHP, ref playerMaxHP);

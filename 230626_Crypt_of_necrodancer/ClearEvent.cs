@@ -40,13 +40,13 @@ namespace _230626_Crypt_of_necrodancer
         public void Shop(ref int Gold, ref int playerHP, ref int playerMaxHP, ref int invenSize, ref String[] strings, ref String[] inventory, ref int stage, ref int playerAttack)
         {
             Dictionary<string, int> itemInventory = new Dictionary<string, int>();
-            itemInventory.Add("하트 보관함", 200);
-            itemInventory.Add("큰 하트 보관함", 800);
-            itemInventory.Add("붕대", 100);
-            itemInventory.Add("회복 포션", 500);
-            itemInventory.Add("낡은 지도", 600);
-            itemInventory.Add("파워 포션", 500);
-            itemInventory.Add("뜨거운 여섯", 2000);
+            itemInventory.Add("하트 보관함", 100);
+            itemInventory.Add("큰 하트 보관함", 400);
+            itemInventory.Add("붕대", 50);
+            itemInventory.Add("회복 포션", 300);
+            itemInventory.Add("낡은 지도", 500);
+            itemInventory.Add("파워 포션", 200);
+            itemInventory.Add("뜨거운 여섯", 1500);
 
             // 초기화
             int ShopItemNum = default;

@@ -29,16 +29,25 @@ namespace _230626_Crypt_of_necrodancer
         {
             // 기본값
             hunterPositions = new List<Position>();
-            stageturn = 0;
+            greenSlimePositions = new List<Position>();
+            blueSlimePositions = new List<Position>();
+            stageturn = default;
             gameover = false;
             ClearCheck = false;
 
             playerHP = 3;
             playerMaxHP = 3;
-            hunterMove = 0;
+            playerAttack = 1;
+
             stage = 1;
-            score = 0;
-            gold = 0;
+            score = default;
+            gold = default;
+
+            hunterMove = default;
+            greenSlimeMove = default;
+            greenSlimeCount = default;
+            blueSlimeMove = default;
+            blueSlimeCount = default;
 
             while (gameover == false) // 게임오버시 탈출
             {
@@ -220,11 +229,11 @@ namespace _230626_Crypt_of_necrodancer
 
 
                     // 헌터 생성
-                    if (stageturn > 10)
+                    if (stageturn > 16 - stage)
                     {
                         hunterMove++;
 
-                        if (hunterMove % 5 == 0) // 5턴마다 적 생성
+                        if (hunterMove % 10 == 0) // 10턴마다 생성
                         {
                             int enemyY = random.Next(2, MAP_SIZE_Y - 2);
                             int enemyX = random.Next(2, MAP_SIZE_X - 2);
@@ -237,7 +246,7 @@ namespace _230626_Crypt_of_necrodancer
                         }
                     }
                     //// 그린 슬라임 생성
-                    while (greenSlimeCount < 3)
+                    while (greenSlimeCount < stage * 4/2)
                     {
                         int slimeHeight = random.Next(4, MAP_SIZE_Y - 3);
                         int slimeWidth = random.Next(4, MAP_SIZE_X - 3);
@@ -251,7 +260,7 @@ namespace _230626_Crypt_of_necrodancer
                         }
                     }
                     //// 블루 슬라임 생성
-                    while (blueSlimeCount < 3)
+                    while (blueSlimeCount < stage * 3/2)
                     {
                         int slimeHeight = random.Next(4, MAP_SIZE_Y - 3);
                         int slimeWidth = random.Next(4, MAP_SIZE_X - 3);
@@ -269,12 +278,11 @@ namespace _230626_Crypt_of_necrodancer
                     enemy.HunterMove(ref map, ref playerPos, ref hunterPositions, ref playerHP);
 
                     // Slime 출력
-                    enemy.GreenSlimeMove(ref map, ref playerPos, ref greenSlimePositions, ref playerHP);
-                    enemy.BlueSlimeMove(ref map, ref playerPos, ref blueSlimePositions, ref playerHP);
+                    enemy.GreenSlimeMove(ref map, ref playerPos, ref greenSlimePositions, ref playerHP, greenSlimeMove);
+                    enemy.BlueSlimeMove(ref map, ref playerPos, ref blueSlimePositions, ref playerHP, blueSlimeMove);
 
                     draw.PlayerHP(ref playerHP, ref playerMaxHP);
                     draw.PlayerGold(ref gold);
-
 
                     //게임 오버 판정
                     if (playerHP <= 0)
@@ -282,9 +290,6 @@ namespace _230626_Crypt_of_necrodancer
                         gameover = true;
                         break;
                     } // 게임오버시 while 탈출
-
-                
-
 
                     // 스탑워치 시작
                     Stopwatch stopwatch = new Stopwatch();
@@ -553,17 +558,31 @@ namespace _230626_Crypt_of_necrodancer
                                     retry = true;
                                     break;
                                 }
+                                if (key.Key == ConsoleKey.P)
+                                {
+                                    if (DEBUG_MODE == true)
+                                    {
+                                        DEBUG_MODE = false;
+                                    }
+                                    else
+                                        DEBUG_MODE = true;
+
+                                    break;
+                                }
 
                                 //debug
                                 if (DEBUG_MODE == true)
                                 {
+                                    Console.ForegroundColor = ConsoleColor.Red;
                                     draw.MoveCursor(72, 0);
                                     Console.WriteLine("[DEBUG]");
 
-
                                     draw.MoveCursor(72, 1);
-                                    Console.WriteLine("Timing : {0}ms", stopwatch.ElapsedMilliseconds - HEART_TIMING);
+                                    Console.WriteLine("Timing : {0}ms   ", stopwatch.ElapsedMilliseconds - HEART_TIMING);
 
+                                    draw.MoveCursor(72, 2);
+                                    Console.WriteLine("Last Timing : {0}", stopwatch.ElapsedMilliseconds);
+                                    Console.ResetColor();
                                 }
                                 //debug
 
@@ -587,8 +606,11 @@ namespace _230626_Crypt_of_necrodancer
                         //debug
                         if (DEBUG_MODE == true)
                         {
+                            Console.ForegroundColor = ConsoleColor.Red;
                             draw.MoveCursor(72, 2);
                             Console.WriteLine("Last Timing : {0}", stopwatch.ElapsedMilliseconds);
+                            Console.ResetColor();
+
                         }
                     }
 
@@ -638,9 +660,19 @@ namespace _230626_Crypt_of_necrodancer
                     score++;
                     stageturn++; // 헌터 출현 턴 조정
                     hunterMove++;
+                    greenSlimeMove++;
+                    blueSlimeMove++;
                     if (score >= highscore)
                     {
                         highscore = score;
+                    }
+                    if (greenSlimeMove >= 4)
+                    {
+                        greenSlimeMove = 0;
+                    }
+                    if (blueSlimeMove >= 8)
+                    {
+                        blueSlimeMove = 0;
                     }
                 }//플레이어, 적 이동 while
 
@@ -684,6 +716,7 @@ namespace _230626_Crypt_of_necrodancer
                 if (stage >= BOSS_STAGE)
                 {
                     bossstage.Run(ref playerHP, ref playerMaxHP, ref playerAttack, ref gold, ref score);
+                    break;
                 }
 
             }

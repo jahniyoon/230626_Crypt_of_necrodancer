@@ -501,29 +501,31 @@ namespace _230626_Crypt_of_necrodancer
                                         }
                                     }
                                 }
-                                if (key.Key == ConsoleKey.R)
+                            
+                                if (key.Key == ConsoleKey.P)
                                 {
-                                    score = 0;
-                                    gold = 0;
-                                    playerHP = 15;
-                                    playerMaxHP = 15;
-                                    hunterMove = 3;
-                                    retry = true;
+                                    if (DEBUG_MODE == true)
+                                    {
+                                        DEBUG_MODE = false;
+                                    }
+                                    else
+                                        DEBUG_MODE = true;
                                     break;
                                 }
 
                                 //debug
                                 if (DEBUG_MODE == true)
                                 {
+                                    Console.ForegroundColor = ConsoleColor.Red;
                                     draw.MoveCursor(72, 0);
                                     Console.WriteLine("[DEBUG]");
 
-
                                     draw.MoveCursor(72, 1);
-                                    Console.WriteLine("Timing : {0}ms", stopwatch.ElapsedMilliseconds - HEART_TIMING);
+                                    Console.WriteLine("Timing : {0}ms   ", stopwatch.ElapsedMilliseconds - HEART_TIMING);
 
-                                    draw.MoveCursor(72, 3);
-                                    Console.WriteLine("Boss HP : {0}", bossHP);
+                                    draw.MoveCursor(72, 2);
+                                    Console.WriteLine("Last Timing : {0}", stopwatch.ElapsedMilliseconds);
+                                    Console.ResetColor();
                                 }
                                 //debug
 
@@ -547,8 +549,10 @@ namespace _230626_Crypt_of_necrodancer
                         //debug
                         if (DEBUG_MODE == true)
                         {
+                            Console.ForegroundColor = ConsoleColor.Red;
                             draw.MoveCursor(72, 2);
                             Console.WriteLine("Last Timing : {0}", stopwatch.ElapsedMilliseconds);
+                            Console.ResetColor();
                         }
                     }
 
@@ -603,6 +607,10 @@ namespace _230626_Crypt_of_necrodancer
 
                     Console.ReadKey();
                     Console.Clear();
+                    image.GAMEOVER(0, 5);
+                    Console.ReadKey();
+                    Console.Clear();
+
 
                     break;
                 } // 게임오버시 while
@@ -610,11 +618,13 @@ namespace _230626_Crypt_of_necrodancer
                 //게임 오버 판정
                 if (bossHP <= 0)
                 {
-                    draw.PlayerHP(ref playerHP, ref playerMaxHP);
+                    Console.ReadKey();
 
+                    draw.PlayerHP(ref playerHP, ref playerMaxHP);
                     draw.MoveCursor(BossPos.x * 2, BossPos.y);
                     draw.BossDead(BossPos.x * 2, BossPos.y);
                     Thread.Sleep(1000);
+
 
                     draw.MoveCursor(26, 5);
                     Console.BackgroundColor = ConsoleColor.Yellow;
@@ -636,7 +646,13 @@ namespace _230626_Crypt_of_necrodancer
                     Console.Write(" SCORE : {0} ", score);
                     draw.MoveCursor(24, 11);
                     Console.Write(" HiGH SCORE : {0} ", highscore);
+                    Thread.Sleep(1000);
+
+
+                    draw.MoveCursor(30, 25);
+                    Console.Write(" NEXT ▶");
                     Console.ResetColor();
+
 
                     Console.ReadKey();
                     Console.Clear();

@@ -11,7 +11,7 @@ namespace _230626_Crypt_of_necrodancer
         protected Random random = new Random();
 
 
-        protected bool DEBUG_MODE = true; 
+        protected bool DEBUG_MODE = false; 
         protected bool gameover = false; 
 
         // MagicNumber
