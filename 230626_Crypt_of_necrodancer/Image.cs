@@ -22,17 +22,38 @@ namespace _230626_Crypt_of_necrodancer
         }
         public void Box(int x, int y)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-
-            Console.WriteLine("■■■■■■        ■■■■■■        ■■■■■■");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            draw.MoveCursor(x, y);
+            Console.WriteLine("▣▦▦▦▦▦▦▦▣");
             draw.MoveCursor(x, y + 1);
-            Console.WriteLine("■        ■        ■        ■        ■        ■");
+            Console.WriteLine("▦");
+            draw.MoveCursor(x+16, y + 1);
+            Console.WriteLine("▦");
             draw.MoveCursor(x, y + 2);
-            Console.WriteLine("■   ①   ■        ■   ②   ■        ■   ③   ■");
+            Console.WriteLine("▦");
+            draw.MoveCursor(x + 16, y + 2);
+            Console.WriteLine("▦");
             draw.MoveCursor(x, y + 3);
-            Console.WriteLine("■        ■        ■        ■        ■        ■");
+            Console.WriteLine("▦");
+            draw.MoveCursor(x + 16, y + 3);
+            Console.WriteLine("▦");
+            draw.MoveCursor(x + 8, y + 4);
+            Console.WriteLine("◈");
             draw.MoveCursor(x, y + 4);
-            Console.WriteLine("■■■■■■        ■■■■■■        ■■■■■■");
+            Console.WriteLine("▦");
+            draw.MoveCursor(x + 16, y + 4);
+            Console.WriteLine("▦");
+            draw.MoveCursor(x, y + 5);
+            Console.WriteLine("▦");
+            draw.MoveCursor(x + 16, y + 5);
+            Console.WriteLine("▦");
+            draw.MoveCursor(x, y + 6);
+            Console.WriteLine("▦");
+            draw.MoveCursor(x + 16, y + 6);
+            Console.WriteLine("▦");
+            draw.MoveCursor(x, y + 7);
+            Console.WriteLine("▣▦▦▦▦▦▦▦▣");
             Console.ResetColor();
 
         }

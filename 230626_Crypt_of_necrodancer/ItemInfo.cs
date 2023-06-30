@@ -67,7 +67,7 @@ namespace _230626_Crypt_of_necrodancer
                 playerAttack += 10;
 
             }
-            if (itemIs == "붕대")
+            if (itemIs == "평범한 붕대")
             {
                 draw.MoveCursor(leftPadding - 2, topPadding); // 대화 초기화
                 Console.WriteLine("                                                      ");
@@ -95,9 +95,9 @@ namespace _230626_Crypt_of_necrodancer
                 Console.WriteLine("                                                      ");
 
                 draw.MoveCursor(leftPadding - 2, topPadding);
-                Console.WriteLine("체력을 3 회복합니다.");
+                Console.WriteLine("체력을 5 회복합니다.");
 
-                playerHP += 3;
+                playerHP += 5;
                 if (playerHP > playerMaxHP)
                 {
                     playerHP = playerMaxHP;
@@ -138,7 +138,7 @@ namespace _230626_Crypt_of_necrodancer
                 draw.PlayerHP(ref playerHP, ref playerMaxHP);
 
             }
-            if (itemIs == "큰 하트 보관함")
+            if (itemIs == "하트 보관함+")
             {
                 draw.MoveCursor(leftPadding - 2, topPadding); // 대화 초기화
                 Console.WriteLine("                                                      ");
@@ -168,6 +168,51 @@ namespace _230626_Crypt_of_necrodancer
                 }
 
                 draw.PlayerHP(ref playerHP, ref playerMaxHP);
+            }
+        }
+        public void ItemInfoIs(ref string itemIs)
+        {
+            if (itemIs == "낡은 지도")
+            {
+                draw.MoveCursor(3, 22);
+                Console.WriteLine("조잡한 그림이 그려져있는 낡은 지도다.");
+
+            }
+            if (itemIs == "파워 포션")
+            {
+                draw.MoveCursor(3, 22);
+                Console.WriteLine("힘을 상승시키는 파워 포션이다.");
+
+            }
+            if (itemIs == "뜨거운 여섯")
+            {
+                draw.MoveCursor(3, 22);
+                Console.WriteLine("이 음료를 마시면 심장이 요동칠 것 같다...");
+
+            }
+            if (itemIs == "평범한 붕대")
+            {
+                draw.MoveCursor(3, 22);
+                Console.WriteLine("가벼운 상처를 치료할 수 있는 평범한 붕대다. 체력을 1 회복한다.");
+
+            }
+            if (itemIs == "회복 포션")
+            {
+                draw.MoveCursor(3, 22);
+                Console.WriteLine("상처를 치유하는 포션이다. 체력을 3 회복한다.");
+
+            }
+            if (itemIs == "하트 보관함")
+            {
+                draw.MoveCursor(3, 22);
+                Console.WriteLine("최대 체력이 1 상승한다.");
+
+
+            }  if (itemIs == "하트 보관함+")
+            {
+                draw.MoveCursor(3, 22);
+                Console.WriteLine("최대 체력이 3 상승한다.");
+
             }
         }
 

@@ -184,6 +184,47 @@ namespace _230626_Crypt_of_necrodancer
 
 
         }
+
+        public void Arrow(int left, int top)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            MoveCursor(left, top);
+            Console.Write("▲");
+          
+            Console.ResetColor();
+
+
+        }
+        public void Arrow_OFF(int left, int top)
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            MoveCursor(left, top);
+            Console.Write("  ");
+
+            Console.ResetColor();
+
+
+        }
+        public void Right_Arrow(int left, int top)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            MoveCursor(left, top);
+            Console.Write("▶");
+
+            Console.ResetColor();
+
+
+        }
+        public void Right_Arrow_OFF(int left, int top)
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            MoveCursor(left, top);
+            Console.Write("  ");
+
+            Console.ResetColor();
+
+
+        }
         public void BossFloor(int left, int top)
         {
             Console.BackgroundColor = ConsoleColor.Black;
@@ -364,7 +405,7 @@ namespace _230626_Crypt_of_necrodancer
 
 
         }
-       
+        
 
 
     }

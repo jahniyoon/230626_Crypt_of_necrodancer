@@ -40,9 +40,9 @@ namespace _230626_Crypt_of_necrodancer
         public void Shop(ref int Gold, ref int playerHP, ref int playerMaxHP, ref int invenSize, ref String[] strings, ref String[] inventory, ref int stage, ref int playerAttack)
         {
             Dictionary<string, int> itemInventory = new Dictionary<string, int>();
-            itemInventory.Add("하트 보관함", 100);
-            itemInventory.Add("큰 하트 보관함", 400);
-            itemInventory.Add("붕대", 50);
+            itemInventory.Add("하트 보관함", 200);
+            itemInventory.Add("하트 보관함+", 500);
+            itemInventory.Add("평범한 붕대", 100);
             itemInventory.Add("회복 포션", 300);
             itemInventory.Add("낡은 지도", 500);
             itemInventory.Add("파워 포션", 200);
@@ -61,80 +61,213 @@ namespace _230626_Crypt_of_necrodancer
             // 상점 영역
             image.ShopBox();
             image.TextBox();
-
             draw.PlayerHP(ref playerHP, ref playerMaxHP);
             draw.PlayerGold(ref Gold);
             draw.MoveCursor(1, 25);
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine(" ※ 1 ~ 3 : 아이템 선택    4 : 상점 나가기");
+            Console.WriteLine(" ※ 방향키 : 선택    Enter : 결정");
             Console.ResetColor();
 
             draw.MoveCursor(leftPadding - 2, topPadding); // 상인 대화
-            Console.WriteLine("[상점 주인 : 어서오시오. 마음껏 골라보시게.");
+            Console.WriteLine("[상점 주인]");    
+            draw.MoveCursor(leftPadding - 2, topPadding+2); // 상인 대화
+            Console.WriteLine("어서오시오 이방인이여. 마음껏 골라보시게.");
 
-            draw.MoveCursor(Box1leftPadding, Box1topPadding); // 박스 위치
-            image.Box(Box1leftPadding, Box1topPadding);
+            image.Box(Box1leftPadding - 2, Box1topPadding);
+            image.Box(Box1leftPadding+18, Box1topPadding);
+            image.Box(Box1leftPadding+38, Box1topPadding);
 
-            draw.MoveCursor(8,  12);
-            Console.WriteLine("[ {0} ]", strings[ShopItemNum], itemInventory[strings[ShopItemNum]]);
-            draw.MoveCursor(8, 13);
-            Console.WriteLine("{1} G", strings[ShopItemNum], itemInventory[strings[ShopItemNum]]);
+            // Item number
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Black;
+            draw.MoveCursor(12, 12); 
+            Console.WriteLine("  ①  ");
+            draw.MoveCursor(32, 12);
+            Console.WriteLine("  ②  ");
+            draw.MoveCursor(52, 12);
+            Console.WriteLine("  ③  ");
+            Console.ResetColor();
 
-            draw.MoveCursor(26, 12);
-            Console.WriteLine("[ {0} ]", strings[ShopItemNum + 1], itemInventory[strings[ShopItemNum + 1]]);
-            draw.MoveCursor(26, 13);
-            Console.WriteLine(" {1} G", strings[ShopItemNum + 1], itemInventory[strings[ShopItemNum + 1]]);
+            draw.MoveCursor(8, 14);
+            Console.WriteLine("[ {0} ]", strings[ShopItemNum]);
+            draw.MoveCursor(28, 14);
+            Console.WriteLine("[ {0} ]", strings[ShopItemNum + 1]);
+            draw.MoveCursor(48, 14);
+            Console.WriteLine("[ {0} ]", strings[ShopItemNum + 2]);
 
-            draw.MoveCursor(48, 12);
-            Console.WriteLine("[ {0} ]", strings[ShopItemNum + 2], itemInventory[strings[ShopItemNum + 2]]);
-            draw.MoveCursor(48, 13);
-            Console.WriteLine("{1} G", strings[ShopItemNum + 2], itemInventory[strings[ShopItemNum + 2]]);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            draw.MoveCursor(12, 15);
+            Console.WriteLine("{0} G ", itemInventory[strings[ShopItemNum]]);
+            draw.MoveCursor(32, 15);
+            Console.WriteLine("{0} G", itemInventory[strings[ShopItemNum + 1]]);
+            draw.MoveCursor(52, 15);
+            Console.WriteLine("{0} G",itemInventory[strings[ShopItemNum + 2]]);
+            Console.ResetColor();
+
+            draw.MoveCursor(60, 3);
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("EXIT ☞");
+            Console.ResetColor();
 
 
+            //draw.Arrow(14, 16);
+            //draw.Arrow(34, 16);
+            //draw.Arrow(54, 16);
+
+
+
+            draw.MoveCursor(leftPadding+55, topPadding + 3);
+            Console.Write("NEXT ▶");
+            Console.ReadKey();
+
+            draw.Arrow(14, 16);
+            draw.MoveCursor(0, 19);
+            image.TextBox();
+            draw.MoveCursor(leftPadding - 2, topPadding + 1);
+            Console.WriteLine("[ {0} ] {1}G", strings[ShopItemNum], itemInventory[strings[ShopItemNum]]);
+            itemInfo.ItemInfoIs(ref strings[ShopItemNum]);
 
             // 구매 체크
+            int shopItemNum = 1;
             bool inputCheck = false;
             while (!inputCheck)
             {
-                Thread.Sleep(800);
 
-                draw.MoveCursor(leftPadding - 2, topPadding + 1);
-                Console.Write("무엇을 살까? => ");
-
-
-                if (int.TryParse(Console.ReadLine(), out inputNum)) // 숫자 체크
+                if (Console.KeyAvailable)
                 {
-                    draw.MoveCursor(leftPadding - 2, topPadding); // 대화 초기화
-                    Console.WriteLine("                                                      ");
-                    draw.MoveCursor(leftPadding - 2, topPadding + 1);
-                    Console.WriteLine("                                                      ");
+                    
+                    draw.MoveCursor(30, 20);
 
-                    if (inputNum >= 1 && inputNum <= 4) // 1 ~ 4 값 체크
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+
+                    // 플레이어 ◀
+                    if (key.Key == ConsoleKey.A || key.Key == ConsoleKey.LeftArrow)
                     {
+                        if (shopItemNum > 1)
+                        {
+                            shopItemNum--;
+                            draw.MoveCursor(0, 19);
+                            image.TextBox();
+                        }
+
+                    }
+                    // 플레이어 ▶
+                    else if (key.Key == ConsoleKey.D || key.Key == ConsoleKey.RightArrow)
+                    {
+                        if (shopItemNum < 4)
+                        {
+                            shopItemNum++;
+                            draw.MoveCursor(0, 19);
+                            image.TextBox();
+                        }
+                       
+                    }
+                    // 플레이어 ▲
+                    else if (key.Key == ConsoleKey.W || key.Key == ConsoleKey.UpArrow)
+                    {
+                        shopItemNum = 4;
+                        draw.MoveCursor(0, 19);
+                        image.TextBox();
+
+                    }
+                    // 플레이어 ▼
+                    else if (key.Key == ConsoleKey.S || key.Key == ConsoleKey.DownArrow)
+                    {
+                        if (shopItemNum == 4)
+                        {
+                            shopItemNum = 3;
+                            draw.MoveCursor(0, 19);
+                            image.TextBox();
+                        }
+                    }
+                    // 플레이어 확인
+                    else if (key.Key == ConsoleKey.Spacebar || key.Key == ConsoleKey.Enter)
+                    {
+                        inputNum = shopItemNum;
+                        draw.MoveCursor(0, 19);
+                        image.TextBox();
                         break;
                     }
-                    else
+
+                    // 화살표 지우기
+                    draw.Arrow_OFF(14, 16);
+                    draw.Arrow_OFF(34, 16);
+                    draw.Arrow_OFF(54, 16);
+                    draw.Right_Arrow_OFF(54, 3);
+
+                  
+
+                    if (shopItemNum == 1)
                     {
-                        draw.MoveCursor(leftPadding - 2, topPadding);
-                        Console.WriteLine("물건은 3번까지 밖에 없다네...");
+                        draw.Arrow(14, 16);
 
-                        inputCheck = false;
+                        draw.MoveCursor(leftPadding - 2, topPadding + 1);
+                        Console.WriteLine("[ {0} ] {1}G", strings[ShopItemNum], itemInventory[strings[ShopItemNum]]);
+                        itemInfo.ItemInfoIs(ref strings[ShopItemNum]);
+
                     }
+
+                    if (shopItemNum == 2)
+                    {
+                        draw.Arrow(34, 16);
+
+                        draw.MoveCursor(leftPadding - 2, topPadding + 1);
+                        Console.WriteLine("[ {0} ] {1}G", strings[ShopItemNum+1], itemInventory[strings[ShopItemNum+1]]);
+                        itemInfo.ItemInfoIs(ref strings[ShopItemNum+1]);
+
+                    }
+                    if (shopItemNum == 3)
+                    {
+                        draw.Arrow(54, 16);
+
+                        draw.MoveCursor(leftPadding - 2, topPadding + 1);
+                        Console.WriteLine("[ {0} ] {1}G", strings[ShopItemNum+2], itemInventory[strings[ShopItemNum+2]]);
+                        itemInfo.ItemInfoIs(ref strings[ShopItemNum+2]);
+                    }
+                    if (shopItemNum == 4)
+                    {
+                        draw.Right_Arrow(54, 3);
+
+                        draw.MoveCursor(leftPadding - 2, topPadding + 1); 
+                        Console.WriteLine("출구가 보인다. 그냥 나갈까?");
+                    }
+
                 }
-                else
-                {
-                    draw.MoveCursor(leftPadding - 2, topPadding); // 대화 초기화
-                    Console.WriteLine("                                                      ");
-                    draw.MoveCursor(leftPadding - 2, topPadding + 1);
-                    Console.WriteLine("                                                      ");
 
-                    draw.MoveCursor(leftPadding - 2, topPadding);
-                    Console.WriteLine("숫자로 가르켜주게나...");
+              
+                //if (int.TryParse(Console.ReadLine(), out inputNum)) // 숫자 체크
+                //{
+                //    draw.MoveCursor(leftPadding - 2, topPadding); // 대화 초기화
+                //    Console.WriteLine("                                                      ");
+                //    draw.MoveCursor(leftPadding - 2, topPadding + 1);
+                //    Console.WriteLine("                                                      ");
+
+                //    if (inputNum >= 1 && inputNum <= 4) // 1 ~ 4 값 체크
+                //    {
+                //        break;
+                //    }
+                //    else
+                //    {
+                //        draw.MoveCursor(leftPadding - 2, topPadding);
+                //        Console.WriteLine("물건은 3번까지 밖에 없다네...");
+
+                //        inputCheck = false;
+                //    }
+                //}
+                //else
+                //{
+                //    draw.MoveCursor(leftPadding - 2, topPadding); // 대화 초기화
+                //    Console.WriteLine("                                                      ");
+                //    draw.MoveCursor(leftPadding - 2, topPadding + 1);
+                //    Console.WriteLine("                                                      ");
+
+                //    draw.MoveCursor(leftPadding - 2, topPadding);
+                //    Console.WriteLine("숫자로 가르켜주게나...");
 
 
-                    inputCheck = false;
-                }
+                //    inputCheck = false;
+                //}
             }
             Console.Write("");
 
@@ -149,12 +282,14 @@ namespace _230626_Crypt_of_necrodancer
                 switch (inputNum)
                 {
                     case 1:
-                        draw.MoveCursor(leftPadding - 2, topPadding);
+                        draw.MoveCursor(leftPadding - 2, topPadding + 1);
 
                         buyItem = strings[ShopItemNum];
 
                         Console.WriteLine("'{0}' 아이템을 구매하기로했습니다.", strings[ShopItemNum]);
                         Thread.Sleep(800);
+                        draw.MoveCursor(0, 19);
+                        image.TextBox();
 
                         if (broke(itemInventory[strings[ShopItemNum]], Gold) == 0)
                         {
@@ -170,16 +305,20 @@ namespace _230626_Crypt_of_necrodancer
                         draw.MoveCursor(leftPadding + 18, topPadding + 1);
                         Thread.Sleep(800);
 
-                        Console.WriteLine("                             Next >");
+                        draw.MoveCursor(leftPadding + 55, topPadding + 3);
+                        Console.Write("NEXT ▶");
                         Console.ReadKey();
                         Console.Clear();
                         break;
                     case 2:
-                        draw.MoveCursor(leftPadding - 2, topPadding);
-                        
+
                         buyItem = strings[ShopItemNum + 1];
+                        draw.MoveCursor(leftPadding - 2, topPadding + 1);
 
                         Console.WriteLine("'{0}' 아이템을 구매하기로했습니다.", strings[ShopItemNum + 1]);
+                        Thread.Sleep(800);
+                        draw.MoveCursor(0, 19);
+                        image.TextBox();
                         if (broke(itemInventory[strings[ShopItemNum + 1]], Gold) == 0)
                         {
                             Gold = Gold - itemInventory[strings[ShopItemNum + 1]];
@@ -194,16 +333,20 @@ namespace _230626_Crypt_of_necrodancer
                         draw.MoveCursor(leftPadding + 18, topPadding + 1);
                         Thread.Sleep(800);
 
-                        Console.WriteLine("                             Next >");
+                        draw.MoveCursor(leftPadding + 55, topPadding + 3);
+                        Console.Write("NEXT ▶"); 
                         Console.ReadKey();
                         Console.Clear();
                         break;
                     case 3:
-                        draw.MoveCursor(leftPadding - 2, topPadding);
+                        draw.MoveCursor(leftPadding - 2, topPadding + 1);
 
-                         buyItem = strings[ShopItemNum + 2];
+                        buyItem = strings[ShopItemNum + 2];
 
-                        Console.WriteLine("'{0}' 아이템을 구매하기로했습니다.", strings[ShopItemNum + 2]);
+                        Console.WriteLine("'{0}' 아이템을 구매하기로했습니다.", strings[ShopItemNum + 1]);
+                        Thread.Sleep(800);
+                        draw.MoveCursor(0, 19);
+                        image.TextBox();
                         if (broke(itemInventory[strings[ShopItemNum + 2]], Gold) == 0)
                         {
                             Gold = Gold - itemInventory[strings[ShopItemNum + 2]];
@@ -218,17 +361,19 @@ namespace _230626_Crypt_of_necrodancer
                         draw.MoveCursor(leftPadding + 18, topPadding + 1);
                         Thread.Sleep(800);
 
-                        Console.WriteLine("                             Next >");
+                        draw.MoveCursor(leftPadding + 55, topPadding + 3);
+                        Console.Write("NEXT ▶");
                         Console.ReadKey();
                         Console.Clear();
                         break;
                     case 4:
-                        draw.MoveCursor(leftPadding - 2, topPadding);
+                        draw.MoveCursor(leftPadding - 2, topPadding + 1);
                         Console.WriteLine("상점을 나갑니다.");
                         Thread.Sleep(800);
 
                         draw.MoveCursor(leftPadding + 18, topPadding + 1);
-                        Console.WriteLine("                             Next >");
+                        draw.MoveCursor(leftPadding + 55, topPadding + 3);
+                        Console.Write("NEXT ▶");
                         Console.ReadKey();
                         Console.Clear();
                         break;

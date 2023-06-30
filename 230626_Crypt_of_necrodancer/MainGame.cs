@@ -25,6 +25,12 @@ namespace _230626_Crypt_of_necrodancer
         RhythmBar rhythmBar = new RhythmBar();
         BossStage bossstage = new BossStage();
 
+        public void TestRun()
+        {
+            clearevent.Shop(ref gold, ref playerHP, ref playerMaxHP, ref invenSize, ref strings, ref inventory, ref stage, ref playerAttack);
+
+        }
+
         public void Run()
         {
             // 기본값

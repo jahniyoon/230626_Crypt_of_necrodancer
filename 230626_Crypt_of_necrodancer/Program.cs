@@ -24,9 +24,6 @@ namespace _230626_Crypt_of_necrodancer
                 maingame.Story();
                 maingame.Run();
 
-                //testroom.Run();
-
-                //bar.Bar();
             }
 
         }

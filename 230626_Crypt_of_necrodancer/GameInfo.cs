@@ -69,7 +69,7 @@ namespace _230626_Crypt_of_necrodancer
 
         // 아이템 리스트
         //protected String[] strings = { "막대기", "녹슨 검", "녹슨 방패", "병사의 검", "병사의 방패", "회복 포션", "다이아몬드" };
-        protected String[] strings = {"하트 보관함", "큰 하트 보관함", "붕대", "회복 포션", "낡은 지도","파워 포션", "뜨거운 여섯" };
+        protected String[] strings = {"하트 보관함", "하트 보관함+", "평범한 붕대", "회복 포션", "낡은 지도","파워 포션", "뜨거운 여섯" };
         protected String[] inventory = new string[99];
 
     }
